@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GoldPari - Hisob To'ldirish va Pul Yechish</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Asosiy CSS */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --primary: #ffc107;
+            --secondary: #212529;
+            --accent: #28a745;
+            --selected: #007bff;
+            --text: #333333;
+            --light: #f8f9fa;
+            --white: #ffffff;
+        }
+
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            color: var(--text);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header */
+        header {
+            background-color: var(--secondary);
+            color: var(--white);
+            padding: 20px 0;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 32px;
+            font-weight: bold;
+            color: var(--primary);
+            text-decoration: none;
+            margin-bottom: 10px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .logo i {
+            margin-right: 15px;
+            font-size: 36px;
+            animation: coinRotate 3s infinite ease-in-out;
+        }
+
+        .logo-text {
+            position: relative;
+            display: inline-block;
+        }
+
+        .logo-text::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, var(--primary), transparent);
+            animation: shimmer 2s infinite;
+        }
+
+        .tagline {
+            font-size: 16px;
+            opacity: 0.9;
+            text-align: center;
+            animation: fadeInUp 1s ease;
+        }
+
+        /* Main Content */
+        main {
+            flex: 1;
+            padding: 40px 0;
+        }
+
+        .hero {
+            text-align: center;
+            margin-bottom: 40px;
+            animation: fadeIn 1s ease;
+        }
+
+        .hero h1 {
+            font-size: 36px;
+            margin-bottom: 15px;
+            color: var(--secondary);
+        }
+
+        .hero p {
+            font-size: 18px;
+            max-width: 700px;
+            margin: 0 auto 30px;
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        .highlight {
+            background-color: var(--primary);
+            color: var(--secondary);
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-weight: bold;
+            animation: pulse 2s infinite;
+        }
+
+        /* Form Section */
+        .form-section {
+            background-color: var(--white);
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            padding: 40px;
+            max-width: 600px;
+            margin: 0 auto;
+            animation: fadeInUp 0.8s ease;
+        }
+
+        .form-title {
+            text-align: center;
+            margin-bottom: 30px;
+            color: var(--secondary);
+            font-size: 24px;
+            position: relative;
+            padding-bottom: 15px;
+        }
+
+        .form-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background-color: var(--primary);
+            border-radius: 2px;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--secondary);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e1e5e9;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: all 0.3s;
+        }
+
+        .form-control:focus {
+            border-color: var(--selected);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.2);
+        }
+
+        .amount-options {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .amount-option {
+            padding: 12px;
+            text-align: center;
+            background-color: var(--light);
+            border: 2px solid #e1e5e9;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 500;
+        }
+
+        .amount-option:hover {
+            background-color: #e9ecef;
+            border-color: #adb5bd;
+        }
+
+        .amount-option.selected {
+            background-color: var(--selected);
+            border-color: var(--selected);
+            color: var(--white);
+            font-weight: bold;
+        }
+
+        .custom-amount {
+            display: none;
+            margin-top: 10px;
+            animation: slideDown 0.3s ease;
+        }
+
+        .custom-amount.active {
+            display: block;
+        }
+
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            background-color: var(--accent);
+            color: var(--white);
+            border: none;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn:hover {
+            background-color: #218838;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(40, 167, 69, 0.3);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .btn i {
+            margin-right: 10px;
+        }
+
+        /* Info Section */
+        .info-section {
+            margin-top: 50px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+
+        .info-card {
+            background-color: var(--white);
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            text-align: center;
+            transition: transform 0.3s;
+        }
+
+        .info-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .info-card i {
+            font-size: 40px;
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+
+        .info-card h3 {
+            margin-bottom: 15px;
+            color: var(--secondary);
+        }
+
+        .info-card p {
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--secondary);
+            color: var(--white);
+            padding: 30px 0;
+            margin-top: 50px;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-logo {
+            font-size: 20px;
+            font-weight: bold;
+            color: var(--primary);
+        }
+
+        .telegram-link {
+            display: inline-flex;
+            align-items: center;
+            background-color: #0088cc;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+
+        .telegram-link:hover {
+            background-color: #0077b5;
+            transform: translateY(-2px);
+        }
+
+        .telegram-link i {
+            margin-right: 10px;
+            font-size: 20px;
+        }
+
+        .copyright {
+            text-align: center;
+            margin-top: 20px;
+            opacity: 0.7;
+            font-size: 14px;
+        }
+
+        /* Animatsiyalar */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes slideDown {
+            from { opacity: 0; max-height: 0; }
+            to { opacity: 1; max-height: 100px; }
+        }
+
+        @keyframes coinRotate {
+            0% { transform: rotateY(0deg); }
+            50% { transform: rotateY(180deg); }
+            100% { transform: rotateY(360deg); }
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            50% { transform: translateX(100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        @keyframes glow {
+            0% { text-shadow: 0 0 5px rgba(255, 193, 7, 0.5); }
+            50% { text-shadow: 0 0 20px rgba(255, 193, 7, 0.8), 0 0 30px rgba(255, 193, 7, 0.6); }
+            100% { text-shadow: 0 0 5px rgba(255, 193, 7, 0.5); }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .logo {
+                font-size: 28px;
+                margin-bottom: 10px;
+            }
+            
+            .logo i {
+                font-size: 30px;
+            }
+            
+            .hero h1 {
+                font-size: 28px;
+            }
+            
+            .form-section {
+                padding: 25px;
+            }
+            
+            .amount-options {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .footer-content {
+                flex-direction: column;
+                gap: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <a href="#" class="logo">
+                    <i class="fas fa-coins"></i>
+                    <span class="logo-text">GoldPari</span>
+                </a>
+                <div class="tagline">Hisob to'ldirish va pul yechish 0% komissiya</div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <div class="container">
+            <section class="hero">
+                <h1>GoldPari Hisob To'ldirish va Pul Yechish</h1>
+                <p><span class="highlight">0% komissiya</span> bilan GoldPari hisobingizni to'ldiring yoki hisobingizdan pul yeching. Tez, oson va xavfsiz!</p>
+            </section>
+
+            <section class="form-section">
+                <h2 class="form-title">Pul O'tkazish So'rovi</h2>
+                <form id="transferForm">
+                    <div class="form-group">
+                        <label for="goldpariId">GoldPari ID Raqamingiz</label>
+                        <input type="text" id="goldpariId" class="form-control" placeholder="Masalan: 123456789" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Pul Miqdori</label>
+                        <div class="amount-options">
+                            <div class="amount-option" data-amount="50000">50,000 UZS</div>
+                            <div class="amount-option" data-amount="100000">100,000 UZS</div>
+                            <div class="amount-option" data-amount="200000">200,000 UZS</div>
+                            <div class="amount-option" data-amount="500000">500,000 UZS</div>
+                            <div class="amount-option" data-amount="1000000">1,000,000 UZS</div>
+                            <div class="amount-option" id="customOption">Boshqa miqdor</div>
+                        </div>
+                        <div class="custom-amount" id="customAmount">
+                            <input type="number" id="customAmountInput" class="form-control" placeholder="Miqdorni kiriting (UZS)" min="1000">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="transactionType">Amal Turi</label>
+                        <select id="transactionType" class="form-control" required>
+                            <option value="">Tanlang</option>
+                            <option value="deposit">Hisob to'ldirish</option>
+                            <option value="withdraw">Hisobdan pul yechish</option>
+                        </select>
+                    </div>
+
+                    <button type="submit" class="btn">
+                        <i class="fab fa-telegram"></i> Telegram Orqali Yuborish
+                    </button>
+                </form>
+            </section>
+
+            <section class="info-section">
+                <div class="info-card">
+                    <i class="fas fa-bolt"></i>
+                    <h3>Tez Amalga Oshirish</h3>
+                    <p>So'rovingiz 5 daqiqa ichida qayta ishlanadi va bajariladi</p>
+                </div>
+                <div class="info-card">
+                    <i class="fas fa-shield-alt"></i>
+                    <h3>Xavfsiz</h3>
+                    <p>Barcha operatsiyalar maxfiy ma'lumotlarni himoya qilish standartlariga muvofiq amalga oshiriladi</p>
+                </div>
+                <div class="info-card">
+                    <i class="fas fa-percentage"></i>
+                    <h3>0% Komissiya</h3>
+                    <p>Hech qanday qo'shimcha to'lovlar yo'q. Siz kiritgan miqdor butunlay sizning hisobingizga o'tadi</p>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <i class="fas fa-coins"></i> GoldPari
+                </div>
+                <div>
+                    <a href="https://t.me/baxtga_olga" class="telegram-link" target="_blank">
+                        <i class="fab fa-telegram"></i> @baxtga_olga
+                    </a>
+                </div>
+            </div>
+            <div class="copyright">
+                &copy; 2023 GoldPari. Barcha huquqlar himoyalangan.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Miqdor tanlash logikasi
+        const amountOptions = document.querySelectorAll('.amount-option');
+        const customOption = document.getElementById('customOption');
+        const customAmount = document.getElementById('customAmount');
+        const customAmountInput = document.getElementById('customAmountInput');
+        let selectedAmount = '';
+
+        amountOptions.forEach(option => {
+            option.addEventListener('click', function() {
+                // Barcha tanlangan variantlardan faollikni olib tashlash
+                amountOptions.forEach(opt => opt.classList.remove('selected'));
+                
+                // Joriy variantni faollashtirish
+                this.classList.add('selected');
+                
+                if (this === customOption) {
+                    customAmount.classList.add('active');
+                    customAmountInput.focus();
+                    selectedAmount = '';
+                } else {
+                    customAmount.classList.remove('active');
+                    selectedAmount = this.getAttribute('data-amount');
+                }
+            });
+        });
+
+        // Maxsus miqdor kiritilganda
+        customAmountInput.addEventListener('input', function() {
+            if (customAmount.classList.contains('active')) {
+                selectedAmount = this.value;
+            }
+        });
+
+        // Formani yuborish
+        document.getElementById('transferForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const goldpariId = document.getElementById('goldpariId').value;
+            const transactionType = document.getElementById('transactionType').value;
+            
+            // Agar maxsus miqdor tanlangan bo'lsa
+            if (customAmount.classList.contains('active')) {
+                selectedAmount = customAmountInput.value;
+            }
+            
+            // Ma'lumotlarni tekshirish
+            if (!goldpariId) {
+                alert('Iltimos, GoldPari ID raqamingizni kiriting!');
+                return;
+            }
+            
+            if (!selectedAmount) {
+                alert('Iltimos, pul miqdorini tanlang yoki kiriting!');
+                return;
+            }
+            
+            if (!transactionType) {
+                alert('Iltimos, amal turini tanlang!');
+                return;
+            }
+            
+            // Telegram'ga yuborish uchun xabar tayyorlash
+            const transactionTypeText = transactionType === 'deposit' ? "Hisob to'ldirish" : "Hisobdan pul yechish";
+            const message = `GoldPari So'rovi:%0A%0A📋 ID: ${goldpariId}%0A💰 Miqdor: ${selectedAmount} UZS%0A📊 Amal turi: ${transactionTypeText}%0A%0A✅ Iltimos, ushbu so'rovni tezroq bajarishingizni so'raymiz!`;
+            
+            // Telegram'ga yo'naltirish - to'g'ridan-to'g'ri user bilan suhbat
+            window.open(`https://t.me/baxtga_olga?start=goldpari_${Date.now()}&text=${message}`, '_blank');
+            
+            // Formani tozalash
+            this.reset();
+            amountOptions.forEach(opt => opt.classList.remove('selected'));
+            customAmount.classList.remove('active');
+            selectedAmount = '';
+            
+            // Muvaffaqiyat xabari
+            alert('So\'rovingiz Telegram orqali yuborildi! Endi @baxtga_olga foydalanuvchisiga to\'g\'ridan-to\'g\'ri yozishingiz mumkin.');
+        });
+    </script>
+</body>
+</html>
