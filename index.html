@@ -3,599 +3,520 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GoldPari - Hisob To'ldirish va Pul Yechish</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>XGame - DBbet O'yin Platformasi</title>
     <style>
-        /* Asosiy CSS */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
-
-        :root {
-            --primary: #ffc107;
-            --secondary: #212529;
-            --accent: #28a745;
-            --selected: #007bff;
-            --text: #333333;
-            --light: #f8f9fa;
-            --white: #ffffff;
-        }
-
+        
         body {
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-            color: var(--text);
+            background: linear-gradient(135deg, #0c1a3a, #1e3a8a, #3b82f6);
+            color: #fff;
+            line-height: 1.6;
             min-height: 100vh;
-            display: flex;
-            flex-direction: column;
+            padding-bottom: 80px;
         }
-
-        /* Header */
-        header {
-            background-color: var(--secondary);
-            color: var(--white);
-            padding: 20px 0;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-        }
-
+        
         .container {
-            width: 90%;
             max-width: 1200px;
             margin: 0 auto;
+            padding: 0 15px;
         }
-
+        
+        header {
+            background: rgba(0, 0, 0, 0.8);
+            padding: 12px 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
         .header-content {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-        }
-
-        .logo {
-            display: flex;
-            align-items: center;
-            font-size: 32px;
-            font-weight: bold;
-            color: var(--primary);
-            text-decoration: none;
-            margin-bottom: 10px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .logo i {
-            margin-right: 15px;
-            font-size: 36px;
-            animation: coinRotate 3s infinite ease-in-out;
-        }
-
-        .logo-text {
-            position: relative;
-            display: inline-block;
-        }
-
-        .logo-text::after {
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            left: 0;
-            width: 100%;
-            height: 3px;
-            background: linear-gradient(90deg, transparent, var(--primary), transparent);
-            animation: shimmer 2s infinite;
-        }
-
-        .tagline {
-            font-size: 16px;
-            opacity: 0.9;
-            text-align: center;
-            animation: fadeInUp 1s ease;
-        }
-
-        /* Main Content */
-        main {
-            flex: 1;
-            padding: 40px 0;
-        }
-
-        .hero {
-            text-align: center;
-            margin-bottom: 40px;
-            animation: fadeIn 1s ease;
-        }
-
-        .hero h1 {
-            font-size: 36px;
-            margin-bottom: 15px;
-            color: var(--secondary);
-        }
-
-        .hero p {
-            font-size: 18px;
-            max-width: 700px;
-            margin: 0 auto 30px;
-            color: var(--text);
-            line-height: 1.6;
-        }
-
-        .highlight {
-            background-color: var(--primary);
-            color: var(--secondary);
-            padding: 5px 10px;
-            border-radius: 4px;
-            font-weight: bold;
-            animation: pulse 2s infinite;
-        }
-
-        /* Form Section */
-        .form-section {
-            background-color: var(--white);
-            border-radius: 12px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            padding: 40px;
-            max-width: 600px;
-            margin: 0 auto;
-            animation: fadeInUp 0.8s ease;
-        }
-
-        .form-title {
-            text-align: center;
-            margin-bottom: 30px;
-            color: var(--secondary);
-            font-size: 24px;
-            position: relative;
-            padding-bottom: 15px;
-        }
-
-        .form-title::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 80px;
-            height: 4px;
-            background-color: var(--primary);
-            border-radius: 2px;
-        }
-
-        .form-group {
-            margin-bottom: 25px;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 600;
-            color: var(--secondary);
-        }
-
-        .form-control {
-            width: 100%;
-            padding: 12px 15px;
-            border: 2px solid #e1e5e9;
-            border-radius: 8px;
-            font-size: 16px;
-            transition: all 0.3s;
-        }
-
-        .form-control:focus {
-            border-color: var(--selected);
-            outline: none;
-            box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.2);
-        }
-
-        .amount-options {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 10px;
-            margin-top: 10px;
-        }
-
-        .amount-option {
-            padding: 12px;
-            text-align: center;
-            background-color: var(--light);
-            border: 2px solid #e1e5e9;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.3s;
-            font-weight: 500;
-        }
-
-        .amount-option:hover {
-            background-color: #e9ecef;
-            border-color: #adb5bd;
-        }
-
-        .amount-option.selected {
-            background-color: var(--selected);
-            border-color: var(--selected);
-            color: var(--white);
-            font-weight: bold;
-        }
-
-        .custom-amount {
-            display: none;
-            margin-top: 10px;
-            animation: slideDown 0.3s ease;
-        }
-
-        .custom-amount.active {
-            display: block;
-        }
-
-        .btn {
-            display: block;
-            width: 100%;
-            padding: 15px;
-            background-color: var(--accent);
-            color: var(--white);
-            border: none;
-            border-radius: 8px;
-            font-size: 18px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s;
-            margin-top: 20px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .btn:hover {
-            background-color: #218838;
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(40, 167, 69, 0.3);
-        }
-
-        .btn:active {
-            transform: translateY(0);
-        }
-
-        .btn i {
-            margin-right: 10px;
-        }
-
-        /* Info Section */
-        .info-section {
-            margin-top: 50px;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 30px;
-        }
-
-        .info-card {
-            background-color: var(--white);
-            border-radius: 10px;
-            padding: 25px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-            text-align: center;
-            transition: transform 0.3s;
-        }
-
-        .info-card:hover {
-            transform: translateY(-5px);
-        }
-
-        .info-card i {
-            font-size: 40px;
-            color: var(--primary);
-            margin-bottom: 15px;
-        }
-
-        .info-card h3 {
-            margin-bottom: 15px;
-            color: var(--secondary);
-        }
-
-        .info-card p {
-            color: var(--text);
-            line-height: 1.6;
-        }
-
-        /* Footer */
-        footer {
-            background-color: var(--secondary);
-            color: var(--white);
-            padding: 30px 0;
-            margin-top: 50px;
-        }
-
-        .footer-content {
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
-
-        .footer-logo {
-            font-size: 20px;
+        
+        .logo {
+            font-size: 24px;
             font-weight: bold;
-            color: var(--primary);
+            color: #3b82f6;
+            text-shadow: 0 0 10px rgba(59, 130, 246, 0.5);
         }
-
-        .telegram-link {
-            display: inline-flex;
-            align-items: center;
-            background-color: #0088cc;
-            color: white;
-            padding: 10px 20px;
-            border-radius: 8px;
-            text-decoration: none;
+        
+        .logo span {
+            color: #fbbf24;
+        }
+        
+        .promo-code {
+            background: #fbbf24;
+            color: #1e3a8a;
+            padding: 6px 12px;
+            border-radius: 5px;
             font-weight: bold;
-            transition: all 0.3s;
-        }
-
-        .telegram-link:hover {
-            background-color: #0077b5;
-            transform: translateY(-2px);
-        }
-
-        .telegram-link i {
-            margin-right: 10px;
-            font-size: 20px;
-        }
-
-        .copyright {
-            text-align: center;
-            margin-top: 20px;
-            opacity: 0.7;
             font-size: 14px;
         }
-
-        /* Animatsiyalar */
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+        
+        .hero {
+            padding: 40px 0 30px;
+            text-align: center;
+            margin-bottom: 20px;
         }
-
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
+        
+        .hero h1 {
+            font-size: 28px;
+            margin-bottom: 15px;
+            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
         }
-
-        @keyframes slideDown {
-            from { opacity: 0; max-height: 0; }
-            to { opacity: 1; max-height: 100px; }
+        
+        .hero p {
+            font-size: 16px;
+            max-width: 700px;
+            margin: 0 auto 20px;
+            color: #d1d5db;
         }
-
-        @keyframes coinRotate {
-            0% { transform: rotateY(0deg); }
-            50% { transform: rotateY(180deg); }
-            100% { transform: rotateY(360deg); }
+        
+        .promo-banner {
+            background: rgba(30, 58, 138, 0.9);
+            padding: 15px;
+            border-radius: 10px;
+            margin: 20px 0;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            border-left: 5px solid #fbbf24;
         }
-
-        @keyframes shimmer {
-            0% { transform: translateX(-100%); }
-            50% { transform: translateX(100%); }
-            100% { transform: translateX(100%); }
+        
+        .promo-banner h2 {
+            margin-bottom: 8px;
+            color: #fbbf24;
+            font-size: 20px;
         }
-
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-            100% { transform: scale(1); }
+        
+        .promo-code-large {
+            background: #fbbf24;
+            color: #1e3a8a;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-weight: bold;
+            display: inline-block;
+            margin: 10px 0;
+            font-size: 20px;
+            letter-spacing: 2px;
         }
-
-        @keyframes glow {
-            0% { text-shadow: 0 0 5px rgba(255, 193, 7, 0.5); }
-            50% { text-shadow: 0 0 20px rgba(255, 193, 7, 0.8), 0 0 30px rgba(255, 193, 7, 0.6); }
-            100% { text-shadow: 0 0 5px rgba(255, 193, 7, 0.5); }
+        
+        .promo-banner p {
+            font-size: 14px;
+            margin-top: 8px;
         }
-
-        /* Responsive */
+        
+        .section-title {
+            text-align: center;
+            margin: 25px 0 15px;
+            font-size: 22px;
+            color: #fbbf24;
+        }
+        
+        .games-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .game-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            cursor: pointer;
+        }
+        
+        .game-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+        }
+        
+        .game-card.coming-soon {
+            opacity: 0.8;
+            cursor: not-allowed;
+        }
+        
+        .game-card.coming-soon:hover {
+            transform: none;
+        }
+        
+        .game-image {
+            height: 140px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .game-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+        
+        .game-card:not(.coming-soon):hover .game-image img {
+            transform: scale(1.05);
+        }
+        
+        .game-badge {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            background: #ef4444;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 15px;
+            font-size: 10px;
+            font-weight: bold;
+        }
+        
+        .coming-soon-badge {
+            position: absolute;
+            top: 8px;
+            left: 8px;
+            background: #10b981;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 15px;
+            font-size: 10px;
+            font-weight: bold;
+        }
+        
+        .game-info {
+            padding: 12px;
+        }
+        
+        .game-info h3 {
+            margin-bottom: 5px;
+            font-size: 16px;
+            color: #fbbf24;
+            text-align: center;
+        }
+        
+        .game-info p {
+            font-size: 12px;
+            opacity: 0.8;
+            text-align: center;
+            line-height: 1.4;
+        }
+        
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 15px;
+            margin: 30px 0;
+        }
+        
+        .feature-card {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px 15px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(59, 130, 246, 0.2);
+        }
+        
+        .feature-icon {
+            font-size: 30px;
+            margin-bottom: 10px;
+            color: #fbbf24;
+        }
+        
+        .feature-card h3 {
+            margin-bottom: 8px;
+            font-size: 16px;
+        }
+        
+        .feature-card p {
+            font-size: 13px;
+            line-height: 1.4;
+        }
+        
+        .fixed-register {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.95);
+            padding: 12px 0;
+            text-align: center;
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+        }
+        
+        .register-btn {
+            display: inline-block;
+            background: linear-gradient(135deg, #fbbf24, #f59e0b);
+            color: #1e3a8a;
+            padding: 12px 30px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 16px;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(251, 191, 36, 0.4);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .register-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(251, 191, 36, 0.6);
+        }
+        
+        .message {
+            display: none;
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(30, 58, 138, 0.9);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 5px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            z-index: 1000;
+            max-width: 350px;
+            border-left: 5px solid #fbbf24;
+        }
+        
         @media (max-width: 768px) {
             .header-content {
                 flex-direction: column;
                 text-align: center;
             }
             
-            .logo {
-                font-size: 28px;
-                margin-bottom: 10px;
-            }
-            
-            .logo i {
-                font-size: 30px;
+            .promo-code {
+                margin-top: 8px;
             }
             
             .hero h1 {
-                font-size: 28px;
+                font-size: 24px;
             }
             
-            .form-section {
-                padding: 25px;
+            .hero p {
+                font-size: 14px;
             }
             
-            .amount-options {
+            .games-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 12px;
+            }
+            
+            .game-image {
+                height: 120px;
+            }
+            
+            .features {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 12px;
+            }
+            
+            .register-btn {
+                padding: 10px 20px;
+                font-size: 14px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .games-grid {
                 grid-template-columns: repeat(2, 1fr);
             }
             
-            .footer-content {
-                flex-direction: column;
-                gap: 20px;
+            .game-image {
+                height: 110px;
+            }
+            
+            .game-info h3 {
+                font-size: 14px;
+            }
+            
+            .game-info p {
+                font-size: 11px;
+            }
+            
+            .features {
+                grid-template-columns: 1fr;
             }
         }
     </style>
 </head>
 <body>
-    <!-- Header -->
     <header>
         <div class="container">
             <div class="header-content">
-                <a href="#" class="logo">
-                    <i class="fas fa-coins"></i>
-                    <span class="logo-text">GoldPari</span>
-                </a>
-                <div class="tagline">Hisob to'ldirish va pul yechish 0% komissiya</div>
+                <div class="logo">X<span>Game</span></div>
+                <div class="promo-code">Promokod: XGAME</div>
             </div>
         </div>
     </header>
 
-    <!-- Main Content -->
-    <main>
+    <section class="hero">
         <div class="container">
-            <section class="hero">
-                <h1>GoldPari Hisob To'ldirish va Pul Yechish</h1>
-                <p><span class="highlight">0% komissiya</span> bilan GoldPari hisobingizni to'ldiring yoki hisobingizdan pul yeching. Tez, oson va xavfsiz!</p>
-            </section>
-
-            <section class="form-section">
-                <h2 class="form-title">Pul O'tkazish So'rovi</h2>
-                <form id="transferForm">
-                    <div class="form-group">
-                        <label for="goldpariId">GoldPari ID Raqamingiz</label>
-                        <input type="text" id="goldpariId" class="form-control" placeholder="Masalan: 123456789" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label>Pul Miqdori</label>
-                        <div class="amount-options">
-                            <div class="amount-option" data-amount="50000">50,000 UZS</div>
-                            <div class="amount-option" data-amount="100000">100,000 UZS</div>
-                            <div class="amount-option" data-amount="200000">200,000 UZS</div>
-                            <div class="amount-option" data-amount="500000">500,000 UZS</div>
-                            <div class="amount-option" data-amount="1000000">1,000,000 UZS</div>
-                            <div class="amount-option" id="customOption">Boshqa miqdor</div>
-                        </div>
-                        <div class="custom-amount" id="customAmount">
-                            <input type="number" id="customAmountInput" class="form-control" placeholder="Miqdorni kiriting (UZS)" min="1000">
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="transactionType">Amal Turi</label>
-                        <select id="transactionType" class="form-control" required>
-                            <option value="">Tanlang</option>
-                            <option value="deposit">Hisob to'ldirish</option>
-                            <option value="withdraw">Hisobdan pul yechish</option>
-                        </select>
-                    </div>
-
-                    <button type="submit" class="btn">
-                        <i class="fab fa-telegram"></i> Telegram Orqali Yuborish
-                    </button>
-                </form>
-            </section>
-
-            <section class="info-section">
-                <div class="info-card">
-                    <i class="fas fa-bolt"></i>
-                    <h3>Tez Amalga Oshirish</h3>
-                    <p>So'rovingiz 5 daqiqa ichida qayta ishlanadi va bajariladi</p>
-                </div>
-                <div class="info-card">
-                    <i class="fas fa-shield-alt"></i>
-                    <h3>Xavfsiz</h3>
-                    <p>Barcha operatsiyalar maxfiy ma'lumotlarni himoya qilish standartlariga muvofiq amalga oshiriladi</p>
-                </div>
-                <div class="info-card">
-                    <i class="fas fa-percentage"></i>
-                    <h3>0% Komissiya</h3>
-                    <p>Hech qanday qo'shimcha to'lovlar yo'q. Siz kiritgan miqdor butunlay sizning hisobingizga o'tadi</p>
-                </div>
-            </section>
+            <h1>DBbet - XGame Platformasi</h1>
+            <p>Signal olish va daromad qilish uchun o'yinni tanlang</p>
         </div>
-    </main>
+    </section>
 
-    <!-- Footer -->
-    <footer>
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-logo">
-                    <i class="fas fa-coins"></i> GoldPari
+    <div class="container">
+        <div class="promo-banner">
+            <h2>XGAME Promokodi</h2>
+            <div class="promo-code-large">XGAME</div>
+            <p>Ro'yxatdan o'ting va kuchaytirilgan bonuslarga ega bo'ling</p>
+        </div>
+
+        <h2 class="section-title">O'yinlarni Tanlang</h2>
+        <div class="games-grid">
+            <div class="game-card" data-game="apple">
+                <div class="game-image">
+                    <img src="https://play-lh.googleusercontent.com/ezAY-TvV3PlhYWLs8k8czRjWWSdBwFtPrw72fNpS8p6wByC0xBG-Dgt0K5ojieZXrg" alt="Apple of Fortune">
+                    <div class="game-badge">Yangi</div>
                 </div>
-                <div>
-                    <a href="https://t.me/baxtga_olga" class="telegram-link" target="_blank">
-                        <i class="fab fa-telegram"></i> @baxtga_olga
-                    </a>
+                <div class="game-info">
+                    <h3>Apple of Fortune</h3>
+                    <p>Omadingizni sinab ko'ring</p>
                 </div>
             </div>
-            <div class="copyright">
-                &copy; 2023 GoldPari. Barcha huquqlar himoyalangan.
+            
+            <div class="game-card coming-soon" data-game="chicken">
+                <div class="game-image">
+                    <img src="https://tse1.mm.bing.net/th/id/OIP.oIGed5L4MM6qB7azbClo6QHaHL?rs=1&pid=ImgDetMain&o=7&rm=3" alt="Chicken Road">
+                    <div class="coming-soon-badge">Tez Kunda</div>
+                </div>
+                <div class="game-info">
+                    <h3>Chicken Road</h3>
+                    <p>XGAME promokodi bilan g'alaba</p>
+                </div>
+            </div>
+            
+            <div class="game-card coming-soon" data-game="penalty">
+                <div class="game-image">
+                    <img src="https://stawkibet.com/images/evoplay-penaltyshootout-insta.png" alt="Penalty">
+                    <div class="coming-soon-badge">Tez Kunda</div>
+                </div>
+                <div class="game-info">
+                    <h3>Penalty</h3>
+                    <p>XGAME a'zolari signal oladi</p>
+                </div>
+            </div>
+            
+            <div class="game-card" data-game="aviator">
+                <div class="game-image">
+                    <img src="https://pyrogiv.kiev.ua/wp-content/uploads/image1-1-1.jpg" alt="Aviator">
+                    <div class="game-badge">Mashhur</div>
+                </div>
+                <div class="game-info">
+                    <h3>Aviator</h3>
+                    <p>Strategiyangizni ishlating</p>
+                </div>
             </div>
         </div>
-    </footer>
+
+        <div class="features">
+            <div class="feature-card">
+                <div class="feature-icon">💰</div>
+                <h3>Kunlik Yutuqlar</h3>
+                <p>Har kungi o'yinlarda g'alaba qozoning</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">🎁</div>
+                <h3>Maxsus Bonuslar</h3>
+                <p>Faqat XGame promokodi egalari uchun</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">🔑</div>
+                <h3>Promokod Imkoniyatlari</h3>
+                <p>Qo'shimcha imkoniyatlarga ega bo'ling</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">📱</div>
+                <h3>Qulay Interfeys</h3>
+                <p>Telefonlarda qulay foydalanish</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="fixed-register">
+        <a href="#" class="register-btn" id="register-btn">DBbet-da Ro'yxatdan O'ting</a>
+    </div>
+
+    <div class="message" id="message"></div>
 
     <script>
-        // Miqdor tanlash logikasi
-        const amountOptions = document.querySelectorAll('.amount-option');
-        const customOption = document.getElementById('customOption');
-        const customAmount = document.getElementById('customAmount');
-        const customAmountInput = document.getElementById('customAmountInput');
-        let selectedAmount = '';
-
-        amountOptions.forEach(option => {
-            option.addEventListener('click', function() {
-                // Barcha tanlangan variantlardan faollikni olib tashlash
-                amountOptions.forEach(opt => opt.classList.remove('selected'));
-                
-                // Joriy variantni faollashtirish
-                this.classList.add('selected');
-                
-                if (this === customOption) {
-                    customAmount.classList.add('active');
-                    customAmountInput.focus();
-                    selectedAmount = '';
-                } else {
-                    customAmount.classList.remove('active');
-                    selectedAmount = this.getAttribute('data-amount');
-                }
+        // O'yin kartalari uchun hodisa qo'shish
+        document.querySelectorAll('.game-card').forEach(card => {
+            card.addEventListener('click', function() {
+                const game = this.getAttribute('data-game');
+                const isComingSoon = this.classList.contains('coming-soon');
+                openGame(game, isComingSoon);
             });
         });
-
-        // Maxsus miqdor kiritilganda
-        customAmountInput.addEventListener('input', function() {
-            if (customAmount.classList.contains('active')) {
-                selectedAmount = this.value;
+        
+        function openGame(game, isComingSoon) {
+            let message = "";
+            let url = "";
+            
+            switch(game) {
+                case "apple":
+                    message = "Apple of Fortune o'yiniga yo'naltirilmoqdasiz. Omadingizni sinab ko'ring!";
+                    url = "https://dbbet.com/games/apple-of-fortune";
+                    break;
+                case "chicken":
+                    message = "Chicken Road o'yini tez orada ochiladi! XGAME promokodi orqali ro'yxatdan o'tgan o'yinchilar deyarli mag'lub bo'lmaydi!";
+                    // URL yo'q - faqat xabar ko'rsatiladi
+                    break;
+                case "penalty":
+                    message = "Penalty o'yini tez orada ochiladi! XGAME promokod azolari birinchi bo'lib signal oladi.";
+                    // URL yo'q - faqat xabar ko'rsatiladi
+                    break;
+                case "aviator":
+                    message = "Aviator o'yiniga yo'naltirilmoqdasiz. Strategiyangizni ishlating va samolyot uchishidan oldin chiqing!";
+                    url = "https://dbbet.com/games/aviator";
+                    break;
             }
-        });
-
-        // Formani yuborish
-        document.getElementById('transferForm').addEventListener('submit', function(e) {
+            
+            showMessage(message);
+            
+            // Agar URL mavjud bo'lsa va o'yin "tez kunda" emas bo'lsa, yangi oynada ochish
+            if (url && !isComingSoon) {
+                setTimeout(() => {
+                    window.open(url, '_blank');
+                }, 1500);
+            }
+        }
+        
+        // Ro'yxatdan o'tish tugmasi
+        document.getElementById('register-btn').addEventListener('click', function(e) {
             e.preventDefault();
-            
-            const goldpariId = document.getElementById('goldpariId').value;
-            const transactionType = document.getElementById('transactionType').value;
-            
-            // Agar maxsus miqdor tanlangan bo'lsa
-            if (customAmount.classList.contains('active')) {
-                selectedAmount = customAmountInput.value;
-            }
-            
-            // Ma'lumotlarni tekshirish
-            if (!goldpariId) {
-                alert('Iltimos, GoldPari ID raqamingizni kiriting!');
-                return;
-            }
-            
-            if (!selectedAmount) {
-                alert('Iltimos, pul miqdorini tanlang yoki kiriting!');
-                return;
-            }
-            
-            if (!transactionType) {
-                alert('Iltimos, amal turini tanlang!');
-                return;
-            }
-            
-            // Telegram'ga yuborish uchun xabar tayyorlash
-            const transactionTypeText = transactionType === 'deposit' ? "Hisob to'ldirish" : "Hisobdan pul yechish";
-            const message = `GoldPari So'rovi:%0A%0A📋 ID: ${goldpariId}%0A💰 Miqdor: ${selectedAmount} UZS%0A📊 Amal turi: ${transactionTypeText}%0A%0A✅ Iltimos, ushbu so'rovni tezroq bajarishingizni so'raymiz!`;
-            
-            // Telegram'ga yo'naltirish - to'g'ridan-to'g'ri user bilan suhbat
-            window.open(`https://t.me/baxtga_olga?start=goldpari_${Date.now()}&text=${message}`, '_blank');
-            
-            // Formani tozalash
-            this.reset();
-            amountOptions.forEach(opt => opt.classList.remove('selected'));
-            customAmount.classList.remove('active');
-            selectedAmount = '';
-            
-            // Muvaffaqiyat xabari
-            alert('So\'rovingiz Telegram orqali yuborildi! Endi @baxtga_olga foydalanuvchisiga to\'g\'ridan-to\'g\'ri yozishingiz mumkin.');
+            showMessage("DBbet platformasiga yo'naltirilmoqdasiz. XGAME promokodini kiriting va ro'yxatdan o'ting!");
+            setTimeout(function() {
+                window.open('https://refpa96317.com/L?tag=d_4765040m_11213c_&site=4765040&ad=11213', '_blank');
+            }, 1500);
         });
+        
+        function showMessage(text) {
+            const messageEl = document.getElementById('message');
+            messageEl.textContent = text;
+            messageEl.style.display = 'block';
+            
+            setTimeout(function() {
+                messageEl.style.display = 'none';
+            }, 4000);
+        }
     </script>
 </body>
 </html>
