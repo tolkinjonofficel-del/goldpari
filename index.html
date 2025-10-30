@@ -473,7 +473,7 @@
             switch(game) {
                 case "apple":
                     message = "Apple of Fortune o'yiniga yo'naltirilmoqdasiz. Omadingizni sinab ko'ring!";
-                    url = "https://dbbet.com/games/apple-of-fortune";
+                    url = "https://refpa96317.com/L?tag=d_4765040m_11213c_&site=4765040&ad=11213&game=apple";
                     break;
                 case "chicken":
                     message = "Chicken Road o'yini tez orada ochiladi! XGAME promokodi orqali ro'yxatdan o'tgan o'yinchilar deyarli mag'lub bo'lmaydi!";
@@ -485,7 +485,7 @@
                     break;
                 case "aviator":
                     message = "Aviator o'yiniga yo'naltirilmoqdasiz. Strategiyangizni ishlating va samolyot uchishidan oldin chiqing!";
-                    url = "https://dbbet.com/games/aviator";
+                    url = "https://refpa96317.com/L?tag=d_4765040m_11213c_&site=4765040&ad=11213&game=aviator";
                     break;
             }
             
@@ -494,7 +494,8 @@
             // Agar URL mavjud bo'lsa va o'yin "tez kunda" emas bo'lsa, yangi oynada ochish
             if (url && !isComingSoon) {
                 setTimeout(() => {
-                    window.open(url, '_blank');
+                    // Yangi oynada ochish
+                    window.open(url, '_blank', 'noopener,noreferrer');
                 }, 1500);
             }
         }
@@ -504,7 +505,8 @@
             e.preventDefault();
             showMessage("DBbet platformasiga yo'naltirilmoqdasiz. XGAME promokodini kiriting va ro'yxatdan o'ting!");
             setTimeout(function() {
-                window.open('https://refpa96317.com/L?tag=d_4765040m_11213c_&site=4765040&ad=11213', '_blank');
+                // Yangi oynada ochish
+                window.open('https://refpa96317.com/L?tag=d_4765040m_11213c_&site=4765040&ad=11213', '_blank', 'noopener,noreferrer');
             }, 1500);
         });
         
@@ -517,6 +519,61 @@
                 messageEl.style.display = 'none';
             }, 4000);
         }
+
+        // Brauzer pop-up blokirovkasi uchun qo'shimcha funksiya
+        function openNewWindow(url) {
+            const newWindow = window.open(url, '_blank');
+            if (!newWindow || newWindow.closed || typeof newWindow.closed == 'undefined') {
+                // Agar pop-up bloklangan bo'lsa
+                showMessage("Pop-up bloklangan! Iltimos, brauzer sozlamalaridan pop-up larni ruxsat bering yoki quyidagi havolani oching: " + url);
+                // Havolani ko'rsatish
+                const link = document.createElement('a');
+                link.href = url;
+                link.target = '_blank';
+                link.style.display = 'none';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            }
+        }
+
+        // O'yin kartalarini qayta sozlash
+        document.querySelectorAll('.game-card').forEach(card => {
+            card.addEventListener('click', function() {
+                const game = this.getAttribute('data-game');
+                const isComingSoon = this.classList.contains('coming-soon');
+                
+                if (!isComingSoon) {
+                    let gameUrl = '';
+                    switch(game) {
+                        case "apple":
+                            gameUrl = "https://refpa96317.com/L?tag=d_4765040m_11213c_&site=4765040&ad=11213&game=apple";
+                            break;
+                        case "aviator":
+                            gameUrl = "https://refpa96317.com/L?tag=d_4765040m_11213c_&site=4765040&ad=11213&game=aviator";
+                            break;
+                    }
+                    
+                    if (gameUrl) {
+                        showMessage("O'yin ochilmoqda...");
+                        setTimeout(() => {
+                            openNewWindow(gameUrl);
+                        }, 1000);
+                    }
+                } else {
+                    let message = '';
+                    switch(game) {
+                        case "chicken":
+                            message = "Chicken Road o'yini tez orada ochiladi! XGAME promokodi orqali ro'yxatdan o'tgan o'yinchilar deyarli mag'lub bo'lmaydi!";
+                            break;
+                        case "penalty":
+                            message = "Penalty o'yini tez orada ochiladi! XGAME promokod azolari birinchi bo'lib signal oladi.";
+                            break;
+                    }
+                    showMessage(message);
+                }
+            });
+        });
     </script>
 </body>
 </html>
