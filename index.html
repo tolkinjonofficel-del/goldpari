@@ -590,7 +590,7 @@
                 }
             });
             
-            // ID o'zgartirish funksiyasi
+            // ID o'zgartirish funksiyasi - TO'LIQ QAYTA BOSHLASH
             function changeUserId() {
                 // Barcha bo'limlarni yashirish va login bo'limiga qaytish
                 warningSection.classList.add('hidden');
@@ -605,6 +605,9 @@
                 // LocalStoragedan ID ni o'chirish
                 localStorage.removeItem('appleFortuneUserId');
                 currentUserId = '';
+                
+                // O'YINNI TO'LIQ QAYTA BOSHLASH
+                currentRound = 1;
                 
                 // Countdownni tozalash
                 if (countdownInterval) {
