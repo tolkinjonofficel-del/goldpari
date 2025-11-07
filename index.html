@@ -364,10 +364,6 @@
             background: linear-gradient(135deg, #9C27B0, #7B1FA2);
         }
 
-        .payment-btn {
-            background: linear-gradient(135deg, #FF9800, #F57C00);
-        }
-
         .share-section {
             text-align: center;
             margin: 15px 0;
@@ -382,19 +378,6 @@
         }
 
         .share-info p {
-            font-size: 0.7rem;
-            margin-bottom: 6px;
-        }
-
-        .payment-info {
-            background: rgba(255, 152, 0, 0.2);
-            border-left: 3px solid #FF9800;
-            padding: 10px;
-            border-radius: 5px;
-            margin: 12px 0;
-        }
-
-        .payment-info p {
             font-size: 0.7rem;
             margin-bottom: 6px;
         }
@@ -519,9 +502,9 @@
         </div>
         
         <div id="warningSection" class="card hidden">
-            <h2>⚠️ Diqqat! Ogohlantirish</h2>
+            <h2>⚠️ Diqqat! Eslatma</h2>
             <div class="warning">
-                <p><strong>AZARTga berilmang! 🎲</strong></p>
+                <p><strong>Kiritgan id raqamingiz AIFUT promokod orqali royhatdan otgan bolishi kerak! 🎲</strong></p>
                 <p>Kunlik yetarli daromadni olib to'xtating. AIFUT promokod orqali ro'yxatdan o'tgan bo'lishingiz shart, shunda aniq signal olasiz.</p>
             </div>
             
@@ -529,7 +512,7 @@
                 <strong>ID Raqamingiz:</strong> <span id="displayUserId"></span>
             </div>
             
-            <button class="btn change-id-btn" id="changeIdBtn">ID Raqamni O'zgartirish</button>
+            <button class="btn change-id-btn" id="changeIdBtn">Boshqa profildan kirish♻</button>
             
             <p><span class="money-highlight">Tayyor bo'lsangiz, daromad olishni boshlang! 💰</span></p>
             <button class="btn start-game-btn" id="confirmStartBtn">Daromad Olishni Boshlash 🚀</button>
@@ -547,7 +530,7 @@
                 <button class="btn change-id-btn" id="changeIdGameBtn" style="margin-top: 5px;">ID Raqamni O'zgartirish</button>
             </div>
             
-            <p><span class="money-highlight">ID raqamingiz ko'rsatilgan profildan o'yinga kiring</span> Butun olmalarni tanlang va g'alaba qiling! 🎯</p>
+            <p><span class="money-highlight">ID raqamingiz ko'rsatilgan profildan o'yinga kiring</span> Olmalarni korish tugmasini bosing va  butun olmalarni tanlang va g'alaba qiling! 🎯</p>
             
             <div class="apples-container" id="applesContainer">
                 <!-- Sirli olmalar JavaScript orqali yaratiladi -->
@@ -564,59 +547,26 @@
             <h2>Yutuqni oling! 🎉</h2>
             <div class="wait-message">
                 <p><strong>O'yin <span id="endRound"></span>-qatorda yakunlandi!</strong></p>
-                <p>Yutuqni oling va qayta o'ynash uchun shoshilmang! 💰</p>
-                <p>Keyingi signalni <span id="countdown">35:00</span> daqiqadan so'ng olasiz</p>
+                <p>Kegingi qatorlarda xavf yuqori Yutuqni oling va qayta signal oling! 💰</p>
+                <p>Ushnu id uchun signal soni cheklangan kegingi signalni <span id="countdown">600:00</span> daqiqadan so'ng olasiz</p>
                 <p class="money-highlight">Qolgan qatorlarda xavf yuqori! Yutuqni oling!</p>
             </div>
 
             <!-- 100% LIK SIGNAL UCHUN TARQATISH BO'LIMI -->
             <div class="share-info">
-                <p><strong>🚀 Taymer davomida 100% aniq signal olish imkoniyati!</strong></p>
-                <p>Do'stlaringizni taklif qiling va keyingi o'yinda 100% aniq signallar oling!</p>
+                <p><strong>🚀 vaqtdan oldin 100% aniq signal olish imkoniyati! </strong></p>
+                <p>20 ta odam taklif qiling va keyingi  100% aniq signalni xoziroq oling taklif qilish tugmasi orqali 20 ta odamga habarni yuboring va signal olishingiz mumkin oling!</p>
             </div>
             
             <div class="share-section">
                 <button class="btn share-btn" id="shareDuringWaitBtn">
-                    📲 Do'stlarni Taklif Qilish
+                    📲  Taklif Qilish
                 </button>
             </div>
             
             <div class="user-id-display">
                 <strong>ID Raqamingiz:</strong> <span id="waitUserId"></span>
                 <button class="btn change-id-btn" id="changeIdWaitBtn" style="margin-top: 5px;">ID Raqamni O'zgartirish</button>
-            </div>
-        </div>
-
-        <div id="signalSection" class="card hidden">
-            <h2>100% Aniq Signal Olish 🚀</h2>
-            
-            <div class="share-info">
-                <p><strong>Birinchi o'yindan so'ng 100% aniq signalni olish uchun quyidagi variantlardan birini tanlang:</strong></p>
-            </div>
-            
-            <div class="payment-info">
-                <p><strong>💰 To'lov qilish:</strong> 300,000 so'm to'lov qiling va darhol 100% aniq signallar oling!</p>
-            </div>
-            
-            <div class="share-info">
-                <p><strong>👥 Do'stlarni taklif qilish:</strong> 50 ta odamni taklif qiling va 100% aniq signallar oling!</p>
-            </div>
-            
-            <div class="user-id-display">
-                <strong>Sizning ID Raqamingiz:</strong> <span id="signalUserId"></span>
-            </div>
-            
-            <div class="option-buttons">
-                <button class="btn payment-btn" id="paymentBtn">
-                    💳 300,000 so'm To'lov Qilish
-                </button>
-                <button class="btn share-btn" id="shareFriendsBtn">
-                    📲 50 Do'stni Taklif Qilish
-                </button>
-            </div>
-            
-            <div class="info-box">
-                <p><strong>Eslatma:</strong> To'lov qilsangiz yoki 50 ta odam taklif qilsangiz, siz 100% aniq signallar olasiz va yutuq ehtimoli oshadi!</p>
             </div>
         </div>
     </div>
@@ -648,10 +598,6 @@
             const endRoundElement = document.getElementById('endRound');
             const waitUserId = document.getElementById('waitUserId');
             const shareDuringWaitBtn = document.getElementById('shareDuringWaitBtn');
-            const signalSection = document.getElementById('signalSection');
-            const signalUserId = document.getElementById('signalUserId');
-            const paymentBtn = document.getElementById('paymentBtn');
-            const shareFriendsBtn = document.getElementById('shareFriendsBtn');
             const hackerAnimation = document.getElementById('hackerAnimation');
             const matrixCode = document.getElementById('matrixCode');
             const hackerProgress = document.getElementById('hackerProgress');
@@ -672,7 +618,7 @@
             let currentUserId = '';
             let applesRevealed = false;
             let countdownInterval;
-            let countdownTime = 35 * 60; // 35 daqiqa soniyalarda
+            let countdownTime = 600 * 60; // 600 daqiqa soniyalarda (10 soat)
             let endRound = 0;
 
             // Bosqichlar konfiguratsiyasi
@@ -735,7 +681,6 @@
                 warningSection.classList.add('hidden');
                 gameSection.classList.add('hidden');
                 waitSection.classList.add('hidden');
-                signalSection.classList.add('hidden');
                 loginSection.classList.remove('hidden');
                 
                 // Inputni tozalash
@@ -824,7 +769,6 @@
             function startGame() {
                 gameSection.classList.remove('hidden');
                 waitSection.classList.add('hidden');
-                signalSection.classList.add('hidden');
                 gameUserId.textContent = currentUserId;
                 roundCounter.textContent = currentRound;
                 gameActive = false;
@@ -959,7 +903,7 @@
                 endRoundElement.textContent = endRound;
                 
                 // Countdownni boshlash
-                countdownTime = 35 * 60; // 35 daqiqa
+                countdownTime = 600 * 60; // 600 daqiqa (10 soat)
                 updateCountdown();
                 
                 countdownInterval = setInterval(() => {
@@ -968,19 +912,10 @@
                     
                     if (countdownTime <= 0) {
                         clearInterval(countdownInterval);
-                        // 35 daqiqadan keyin o'yinni qayta boshlash
+                        // 600 daqiqadan keyin o'yinni qayta boshlash
                         waitSection.classList.add('hidden');
                         currentRound = 1;
-                        
-                        // Birinchi o'yindan keyin signal bo'limini ko'rsatish
-                        const isFirstGame = localStorage.getItem('appleFortuneFirstGame') !== 'completed';
-                        if (isFirstGame) {
-                            localStorage.setItem('appleFortuneFirstGame', 'completed');
-                            signalSection.classList.remove('hidden');
-                            signalUserId.textContent = currentUserId;
-                        } else {
-                            startHackerAnimation();
-                        }
+                        startHackerAnimation();
                     }
                 }, 1000);
             }
@@ -1011,48 +946,11 @@ Mening ID raqamim: ${currentUserId}
                 const shareUrl = `https://t.me/share/url?url=https://t.me/Strategioyinlar_bot&text=${encodeURIComponent(shareMessage)}`;
                 window.open(shareUrl, '_blank');
                 
-                alert('Do\'stlaringizni taklif qilganingiz uchun rahmat! Keyingi o\'yinda 100% aniq signal olasiz!');
-            });
-            
-            // To'lov tugmasi
-            paymentBtn.addEventListener('click', function() {
-                // To'lov sahifasiga yo'naltirish
-                window.open('https://payme.uz/example-payment-link', '_blank');
-                alert('To\'lov sahifasiga yo\'naltirilmoqdasiz... To\'lov qilgach, 100% aniq signallar olasiz!');
+                // Taymer 30 daqiqaga qisqaradi
+                countdownTime = 30 * 60;
+                updateCountdown();
                 
-                // To'lov qilingan deb hisoblab, o'yinni qayta boshlash
-                setTimeout(() => {
-                    signalSection.classList.add('hidden');
-                    startHackerAnimation();
-                }, 3000);
-            });
-            
-            // Do'stlarni taklif qilish tugmasi
-            shareFriendsBtn.addEventListener('click', function() {
-                const shareMessage = `Salom! Kel, sen ham biz bilan o'yin o'ynab daromad qil! 🚀
-
-100% ishlaydigan strategik botga qo'shil:
-
-👉 t.me/Strategioyinlar_bot
-
-🎯 AIFUT promokodi bilan ro'yxatdan o'ting va 200% bonus oling!
-
-💰 Katta yutuqlar sizni kutmoqda!
-
-Mening ID raqamim: ${currentUserId}
-
-#AppleFortune #AIFUT #Signal`;
-                
-                const shareUrl = `https://t.me/share/url?url=https://t.me/Strategioyinlar_bot&text=${encodeURIComponent(shareMessage)}`;
-                window.open(shareUrl, '_blank');
-                
-                alert('Do\'stlaringizni taklif qilganingiz uchun rahmat! 50 kishidan keyin 100% aniq signal olasiz!');
-                
-                // Tarqatishdan keyin o'yinni qayta boshlash
-                setTimeout(() => {
-                    signalSection.classList.add('hidden');
-                    startHackerAnimation();
-                }, 2000);
+                alert('Do\'stlaringizni taklif qilganingiz uchun rahmat! Taymer 30 daqiqaga qisqardi!');
             });
             
             // Sahifa yuklanganda saqlangan ID ni yuklash
