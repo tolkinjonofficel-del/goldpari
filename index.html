@@ -398,6 +398,28 @@
             background: linear-gradient(135deg, #45a049, #3d8b40);
         }
         
+        /* Taymer holati ko'rsatkichlari */
+        .timer-status {
+            display: flex;
+            justify-content: space-between;
+            margin: 10px 0;
+            font-size: 0.8rem;
+        }
+        
+        .timer-status-item {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 5px 10px;
+            border-radius: 5px;
+            text-align: center;
+            flex: 1;
+            margin: 0 5px;
+        }
+        
+        .timer-status-value {
+            font-weight: bold;
+            color: #FFD700;
+        }
+        
         /* Juda kichik ekranlar uchun maxsus sozlamalar */
         @media (max-width: 360px) {
             body {
@@ -456,6 +478,15 @@
 
             .action-buttons {
                 flex-direction: column;
+            }
+            
+            .timer-status {
+                flex-direction: column;
+                gap: 5px;
+            }
+            
+            .timer-status-item {
+                margin: 2px 0;
             }
         }
 
@@ -548,8 +579,20 @@
             <div class="wait-message">
                 <p><strong>O'yin <span id="endRound"></span>-qatorda yakunlandi!</strong></p>
                 <p>Kegingi qatorlarda xavf yuqori Yutuqni oling va qayta signal oling! 💰</p>
-                <p>Ushnu id uchun signal soni cheklangan kegingi signalni <span id="countdown">600:00</span> daqiqadan so'ng olasiz</p>
+                <p>Ushbu id uchun signal soni cheklangan. Keyingi signalni <span id="countdown">600:00</span> daqiqadan so'ng olasiz</p>
                 <p class="money-highlight">Qolgan qatorlarda xavf yuqori! Yutuqni oling!</p>
+            </div>
+
+            <!-- Taymer holati -->
+            <div class="timer-status">
+                <div class="timer-status-item">
+                    <div>Qolgan vaqt:</div>
+                    <div class="timer-status-value" id="remainingTime">600:00</div>
+                </div>
+                <div class="timer-status-item">
+                    <div>Taklif qilishdan keyin:</div>
+                    <div class="timer-status-value" id="afterShareTime">30:00</div>
+                </div>
             </div>
 
             <!-- 100% LIK SIGNAL UCHUN TARQATISH BO'LIMI -->
@@ -595,6 +638,8 @@
             const roundCounter = document.getElementById('roundCounter');
             const waitSection = document.getElementById('waitSection');
             const countdownElement = document.getElementById('countdown');
+            const remainingTimeElement = document.getElementById('remainingTime');
+            const afterShareTimeElement = document.getElementById('afterShareTime');
             const endRoundElement = document.getElementById('endRound');
             const waitUserId = document.getElementById('waitUserId');
             const shareDuringWaitBtn = document.getElementById('shareDuringWaitBtn');
@@ -631,12 +676,36 @@
                 6: { whole: 2, bitten: 3 }
             };
             
-            // Sahifa yuklanganda saqlangan ID ni o'qish
-            function loadSavedUserId() {
+            // Sahifa yuklanganda saqlangan ma'lumotlarni o'qish
+            function loadSavedData() {
                 const savedUserId = localStorage.getItem('appleFortuneUserId');
+                const savedTimerEnd = localStorage.getItem('appleFortuneTimerEnd');
+                
                 if (savedUserId) {
                     userIdInput.value = savedUserId;
                     currentUserId = savedUserId;
+                    
+                    // Agar taymer saqlangan bo'lsa, kutish bo'limiga o'tish
+                    if (savedTimerEnd) {
+                        const now = Date.now();
+                        const timerEnd = parseInt(savedTimerEnd);
+                        
+                        if (timerEnd > now) {
+                            // Taymer hali tugamagan
+                            countdownTime = Math.floor((timerEnd - now) / 1000);
+                            loginSection.classList.add('hidden');
+                            waitSection.classList.remove('hidden');
+                            waitUserId.textContent = savedUserId;
+                            endRoundElement.textContent = localStorage.getItem('appleFortuneEndRound') || '1';
+                            startCountdown();
+                            return;
+                        } else {
+                            // Taymer tugagan, uni tozalash
+                            localStorage.removeItem('appleFortuneTimerEnd');
+                            localStorage.removeItem('appleFortuneEndRound');
+                        }
+                    }
+                    
                     // Agar ID saqlangan bo'lsa, to'g'ridan-to'g'ri ogohlantirish bo'limiga o'tish
                     loginSection.classList.add('hidden');
                     warningSection.classList.remove('hidden');
@@ -689,6 +758,8 @@
                 
                 // LocalStoragedan ID ni o'chirish
                 localStorage.removeItem('appleFortuneUserId');
+                localStorage.removeItem('appleFortuneTimerEnd');
+                localStorage.removeItem('appleFortuneEndRound');
                 currentUserId = '';
                 
                 // O'YINNI TO'LIQ QAYTA BOSHLASH
@@ -902,16 +973,33 @@
                 waitUserId.textContent = currentUserId;
                 endRoundElement.textContent = endRound;
                 
+                // Taymerni saqlash
+                const timerEndTime = Date.now() + (countdownTime * 1000);
+                localStorage.setItem('appleFortuneTimerEnd', timerEndTime.toString());
+                localStorage.setItem('appleFortuneEndRound', endRound.toString());
+                
                 // Countdownni boshlash
-                countdownTime = 600 * 60; // 600 daqiqa (10 soat)
+                startCountdown();
+            }
+            
+            // Countdownni boshlash
+            function startCountdown() {
                 updateCountdown();
                 
                 countdownInterval = setInterval(() => {
                     countdownTime--;
                     updateCountdown();
                     
+                    // Taymerni saqlash
+                    const timerEndTime = Date.now() + (countdownTime * 1000);
+                    localStorage.setItem('appleFortuneTimerEnd', timerEndTime.toString());
+                    
                     if (countdownTime <= 0) {
                         clearInterval(countdownInterval);
+                        // Taymer tugaganda ma'lumotlarni tozalash
+                        localStorage.removeItem('appleFortuneTimerEnd');
+                        localStorage.removeItem('appleFortuneEndRound');
+                        
                         // 600 daqiqadan keyin o'yinni qayta boshlash
                         waitSection.classList.add('hidden');
                         currentRound = 1;
@@ -924,7 +1012,15 @@
             function updateCountdown() {
                 const minutes = Math.floor(countdownTime / 60);
                 const seconds = countdownTime % 60;
-                countdownElement.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                const timeString = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                
+                countdownElement.textContent = timeString;
+                remainingTimeElement.textContent = timeString;
+                
+                // Taklif qilishdan keyingi vaqtni hisoblash (30 daqiqa)
+                const afterShareMinutes = Math.min(30, minutes);
+                const afterShareSeconds = afterShareMinutes === 30 ? seconds : 0;
+                afterShareTimeElement.textContent = `${afterShareMinutes.toString().padStart(2, '0')}:${afterShareSeconds.toString().padStart(2, '0')}`;
             }
             
             // Taymer davomida tarqatish tugmasi
@@ -953,8 +1049,8 @@ Mening ID raqamim: ${currentUserId}
                 alert('Do\'stlaringizni taklif qilganingiz uchun rahmat! Taymer 30 daqiqaga qisqardi!');
             });
             
-            // Sahifa yuklanganda saqlangan ID ni yuklash
-            loadSavedUserId();
+            // Sahifa yuklanganda saqlangan ma'lumotlarni yuklash
+            loadSavedData();
         });
     </script>
 </body>
