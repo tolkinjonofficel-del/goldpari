@@ -13,7 +13,9 @@
         }
         
         body {
-            background: linear-gradient(135deg, #1a2a3a, #0d1b2a);
+            background: 
+                linear-gradient(rgba(10, 15, 20, 0.6), rgba(10, 15, 20, 0.6)),
+                url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="%230d1b2a"/><path d="M0 0L100 100M100 0L0 100" stroke="%234CAF50" stroke-width="0.5" opacity="0.3"/><text x="50" y="50" font-family="monospace" font-size="8" fill="%234CAF50" opacity="0.2" text-anchor="middle" dominant-baseline="middle">0101</text></svg>');
             color: #fff;
             min-height: 100vh;
             overflow-x: hidden;
@@ -21,13 +23,80 @@
             position: relative;
         }
 
-        /* Yangi: Floating background elements */
+        /* Hacker-style background overlay */
+        .hacker-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                repeating-linear-gradient(
+                    0deg,
+                    transparent,
+                    transparent 2px,
+                    rgba(76, 175, 80, 0.03) 2px,
+                    rgba(76, 175, 80, 0.03) 4px
+                ),
+                repeating-linear-gradient(
+                    90deg,
+                    transparent,
+                    transparent 2px,
+                    rgba(76, 175, 80, 0.02) 2px,
+                    rgba(76, 175, 80, 0.02) 4px
+                );
+            pointer-events: none;
+            z-index: -3;
+            opacity: 0.4;
+        }
+
+        /* Matrix code rain effect */
+        .matrix-rain {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -2;
+            opacity: 0.3;
+        }
+
+        .code-column {
+            position: absolute;
+            top: -100px;
+            color: #4CAF50;
+            font-family: monospace;
+            font-size: 14px;
+            animation: matrix-fall linear infinite;
+            text-shadow: 0 0 5px #4CAF50;
+        }
+
+        @keyframes matrix-fall {
+            0% {
+                transform: translateY(-100px);
+                opacity: 0;
+            }
+            5% {
+                opacity: 1;
+            }
+            95% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh);
+                opacity: 0;
+            }
+        }
+
+        /* Floating elements */
         .floating-element {
             position: fixed;
             border-radius: 50%;
-            background: rgba(76, 175, 80, 0.1);
+            background: rgba(76, 175, 80, 0.05);
             animation: float 6s ease-in-out infinite;
             z-index: -1;
+            opacity: 0.4;
         }
 
         .floating-element:nth-child(1) {
@@ -58,41 +127,6 @@
             0%, 100% { transform: translateY(0px) rotate(0deg); }
             50% { transform: translateY(-20px) rotate(180deg); }
         }
-
-        /* Yangi: Particle background */
-        .particles {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: -2;
-        }
-
-        .particle {
-            position: absolute;
-            background: rgba(76, 175, 80, 0.3);
-            border-radius: 50%;
-            animation: particle-float 8s linear infinite;
-        }
-
-        @keyframes particle-float {
-            0% {
-                transform: translateY(100vh) scale(0);
-                opacity: 0;
-            }
-            10% {
-                opacity: 1;
-            }
-            90% {
-                opacity: 1;
-            }
-            100% {
-                transform: translateY(-100px) scale(1);
-                opacity: 0;
-            }
-        }
         
         .container {
             max-width: 100%;
@@ -104,17 +138,16 @@
         header {
             text-align: center;
             padding: 15px 0;
-            background: rgba(0, 0, 0, 0.3);
+            background: rgba(0, 0, 0, 0.6);
             border-radius: 15px;
             margin-bottom: 15px;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
             backdrop-filter: blur(10px);
             border: 1px solid rgba(76, 175, 80, 0.3);
             position: relative;
             overflow: hidden;
         }
 
-        /* Yangi: Header glow effect */
         header::before {
             content: '';
             position: absolute;
@@ -170,13 +203,13 @@
         }
         
         .card {
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(0, 0, 0, 0.6);
             border-radius: 15px;
             padding: 15px;
             margin-bottom: 15px;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
             backdrop-filter: blur(15px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(76, 175, 80, 0.2);
             transition: all 0.3s ease;
             position: relative;
             overflow: hidden;
@@ -184,7 +217,7 @@
 
         .card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.6);
         }
 
         .card::before {
@@ -839,11 +872,12 @@
     </style>
 </head>
 <body>
-    <!-- Yangi: Background elements -->
+    <!-- Hacker-style background elements -->
+    <div class="hacker-bg"></div>
+    <div class="matrix-rain" id="matrixRain"></div>
     <div class="floating-element"></div>
     <div class="floating-element"></div>
     <div class="floating-element"></div>
-    <div class="particles" id="particles"></div>
 
     <div class="container">
         <header>
@@ -907,7 +941,7 @@
             <button class="btn reveal-btn" id="revealBtn">Olmalarni Ko'rish 👀</button>
             
             <div class="selection-instruction hidden" id="selectionInstruction">
-                🎯 Butun olmani tanlang! (tanlanganda AVTOMATIK kegingi qatorga o'tadi)
+                🎯 Butun olmani tanla! (KEGINGI QATORGA AVTOMATIK O'TILADI)
             </div>
             
             <div id="resultMessage" class="result-message hidden"></div>
@@ -950,7 +984,7 @@
         </div>
     </div>
 
-    <!-- Yangi: Fixed position change ID button -->
+    <!-- Fixed position change ID button -->
     <button class="btn change-id-btn hidden" id="globalChangeIdBtn">ID O'zgartirish 🔄</button>
     
     <div id="hackerAnimation" class="hacker-animation hidden">
@@ -988,12 +1022,38 @@
             const userIdInput = document.getElementById('userId');
             const globalChangeIdBtn = document.getElementById('globalChangeIdBtn');
             const selectionInstruction = document.getElementById('selectionInstruction');
-            const particlesContainer = document.getElementById('particles');
-            
+            const matrixRain = document.getElementById('matrixRain');
+
+            // Yangi: Matrix rain effect yaratish
+            function createMatrixRain() {
+                const characters = '01010101010101010101アイウエオカキクケコABCDEFGHIJKLMNOPQRSTUVWXYZ';
+                
+                for (let i = 0; i < 20; i++) {
+                    const column = document.createElement('div');
+                    column.className = 'code-column';
+                    
+                    const left = Math.random() * 100;
+                    const duration = Math.random() * 10 + 5;
+                    const delay = Math.random() * 5;
+                    
+                    column.style.left = `${left}vw`;
+                    column.style.animationDuration = `${duration}s`;
+                    column.style.animationDelay = `${delay}s`;
+                    
+                    // Create multiple characters in the column
+                    let content = '';
+                    for (let j = 0; j < 20; j++) {
+                        const char = characters[Math.floor(Math.random() * characters.length)];
+                        content += char + '<br>';
+                    }
+                    
+                    column.innerHTML = content;
+                    matrixRain.appendChild(column);
+                }
+            }
+
             // ID o'zgartirish tugmalari
             const changeIdBtn = document.getElementById('changeIdBtn');
-            const changeIdGameBtn = document.getElementById('changeIdGameBtn');
-            const changeIdWaitBtn = document.getElementById('changeIdWaitBtn');
             
             // ID ko'rsatish elementlari
             const displayUserId = document.getElementById('displayUserId');
@@ -1004,7 +1064,7 @@
             let currentUserId = '';
             let applesRevealed = false;
             let countdownInterval;
-            let countdownTime = 600 * 60; // 600 daqiqa soniyalarda (10 soat)
+            let countdownTime = 600 * 60;
             let endRound = 0;
             let isShared = false;
 
@@ -1027,27 +1087,6 @@
                 5: 0.90,
                 6: 1.00
             };
-
-            // Yangi: Particle background yaratish
-            function createParticles() {
-                for (let i = 0; i < 20; i++) {
-                    const particle = document.createElement('div');
-                    particle.className = 'particle';
-                    
-                    const size = Math.random() * 5 + 2;
-                    const left = Math.random() * 100;
-                    const delay = Math.random() * 8;
-                    const duration = Math.random() * 6 + 6;
-                    
-                    particle.style.width = `${size}px`;
-                    particle.style.height = `${size}px`;
-                    particle.style.left = `${left}vw`;
-                    particle.style.animationDelay = `${delay}s`;
-                    particle.style.animationDuration = `${duration}s`;
-                    
-                    particlesContainer.appendChild(particle);
-                }
-            }
 
             // Sahifa yuklanganda saqlangan ma'lumotlarni o'qish
             function loadSavedData() {
@@ -1409,9 +1448,9 @@ Mening ID raqamim: ${currentUserId}
                 alert('Do\'stlaringizni taklif qilganingiz uchun rahmat! Taymer 30 daqiqaga qisqardi!');
             });
             
-            // Sahifa yuklanganda saqlangan ma'lumotlarni yuklash va particle efektini boshlash
+            // Sahifa yuklanganda saqlangan ma'lumotlarni yuklash va matrix rain efektini boshlash
             loadSavedData();
-            createParticles();
+            createMatrixRain();
         });
     </script>
 </body>
