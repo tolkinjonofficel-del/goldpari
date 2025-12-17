@@ -622,6 +622,7 @@
             max-width: 100%;
             padding: 15px;
             display: none;
+            overflow-x: hidden;
         }
 
         .container.active {
@@ -889,6 +890,7 @@
             padding: 20px;
             margin-bottom: 20px;
             border: 1px solid rgba(0, 150, 255, 0.2);
+            overflow: hidden;
         }
 
         .round-info {
@@ -928,17 +930,42 @@
             line-height: 1.4;
         }
 
+        /* ============ OLMA CONTAINER STYLES ============ */
         .apples-container {
             display: flex;
-            justify-content: center;
-            gap: 10px;
+            justify-content: space-between;
+            align-items: center;
             margin-bottom: 20px;
-            flex-wrap: wrap;
+            flex-wrap: nowrap;
+            overflow-x: auto;
+            padding-bottom: 10px;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: thin;
+            scrollbar-color: rgba(0, 150, 255, 0.3) transparent;
+        }
+
+        /* Scroll bar styles for webkit browsers */
+        .apples-container::-webkit-scrollbar {
+            height: 4px;
+        }
+
+        .apples-container::-webkit-scrollbar-track {
+            background: rgba(0, 150, 255, 0.1);
+            border-radius: 2px;
+        }
+
+        .apples-container::-webkit-scrollbar-thumb {
+            background: rgba(0, 150, 255, 0.3);
+            border-radius: 2px;
+        }
+
+        .apples-container::-webkit-scrollbar-thumb:hover {
+            background: rgba(0, 150, 255, 0.5);
         }
 
         .apple {
-            width: 60px;
-            height: 60px;
+            width: 55px;
+            height: 55px;
             border-radius: 50%;
             display: flex;
             align-items: center;
@@ -950,6 +977,8 @@
             border: 2px solid transparent;
             position: relative;
             overflow: hidden;
+            flex-shrink: 0;
+            margin: 0 3px;
         }
 
         .apple:hover {
@@ -1145,12 +1174,18 @@
             }
             
             .apple {
-                width: 70px;
-                height: 70px;
+                width: 60px;
+                height: 60px;
+                margin: 0 5px;
             }
             
             .quick-share-buttons {
                 grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .apples-container {
+                justify-content: center;
+                padding: 10px 0;
             }
         }
 
@@ -1165,8 +1200,9 @@
             }
             
             .apple {
-                width: 55px;
-                height: 55px;
+                width: 50px;
+                height: 50px;
+                margin: 0 2px;
             }
             
             .stats-grid {
@@ -1174,9 +1210,9 @@
             }
         }
 
-        @media (max-width: 320px) {
+        @media (max-width: 340px) {
             .container {
-                padding: 10px;
+                padding: 12px;
             }
             
             .header {
@@ -1192,8 +1228,59 @@
             }
             
             .apple {
-                width: 50px;
-                height: 50px;
+                width: 45px;
+                height: 45px;
+                margin: 0 1px;
+            }
+        }
+
+        @media (max-width: 300px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .apple {
+                width: 42px;
+                height: 42px;
+                margin: 0 1px;
+            }
+            
+            .game-section,
+            .login-section,
+            .wait-section,
+            .promo-banner,
+            .vip-section {
+                padding: 15px;
+            }
+        }
+
+        /* Very small screens - adjust apples spacing */
+        @media (max-width: 280px) {
+            .apple {
+                width: 40px;
+                height: 40px;
+            }
+            
+            .apples-container {
+                gap: 0;
+            }
+        }
+
+        /* Landscape orientation */
+        @media (max-height: 500px) and (orientation: landscape) {
+            .container {
+                padding: 10px;
+            }
+            
+            .apple {
+                width: 45px;
+                height: 45px;
+            }
+            
+            .floating-register {
+                bottom: 10px;
+                left: 10px;
+                right: 10px;
             }
         }
     </style>
@@ -2339,7 +2426,7 @@
                 createMysteryApples();
             }
             
-            // Create mystery apples
+            // Create mystery apples - O'ZGARTIRILGAN: 5 ta olma bitta qatorda
             function createMysteryApples() {
                 if (!applesContainer) return;
                 
@@ -2351,6 +2438,7 @@
                     revealBtn.innerHTML = `<i class="fas fa-eye"></i> ${translations[currentLang]?.revealText || 'OLMALARNI KORISH'}`;
                 }
                 
+                // Faqat 5 ta olma yaratish
                 for (let i = 0; i < 5; i++) {
                     const apple = document.createElement('div');
                     apple.className = 'apple mystery-apple';
@@ -2361,6 +2449,9 @@
                     });
                     applesContainer.appendChild(apple);
                 }
+                
+                // Apples container'ni markazga joylashtirish
+                applesContainer.style.justifyContent = 'space-between';
             }
             
             // Reveal apples
@@ -2402,7 +2493,7 @@
                     [apples[i], apples[j]] = [apples[j], apples[i]];
                 }
                 
-                // Create apples
+                // Create apples - 5 ta olma bitta qatorda
                 for (let i = 0; i < totalApples; i++) {
                     const apple = document.createElement('div');
                     const appleType = apples[i];
@@ -2418,6 +2509,9 @@
                     
                     applesContainer.appendChild(apple);
                 }
+                
+                // Apples container'ni markazga joylashtirish
+                applesContainer.style.justifyContent = 'space-between';
             }
             
             // Select apple
