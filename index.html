@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --primary: #1e90ff; /* Ko'k rang asosiy rang sifatida */
+            --primary: #1e90ff;
             --primary-dark: #0066cc;
             --secondary: #ffcc00;
             --accent: #fd7e14;
@@ -21,6 +21,7 @@
             --glass: rgba(255, 255, 255, 0.05);
             --glass-border: rgba(255, 255, 255, 0.1);
             --shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            --telegram: #0088cc;
         }
 
         * {
@@ -103,6 +104,16 @@
         .btn-vip:hover {
             transform: translateY(-2px);
             box-shadow: 0 4px 12px rgba(255, 204, 0, 0.3);
+        }
+
+        .btn-telegram {
+            background: linear-gradient(135deg, var(--telegram), #006699);
+            color: white;
+        }
+
+        .btn-telegram:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 136, 204, 0.3);
         }
 
         .btn-small {
@@ -239,7 +250,7 @@
         .logo-text {
             font-size: 18px;
             font-weight: 700;
-            color: var(--primary); /* Ko'k rang */
+            color: var(--primary);
             text-shadow: 0 0 10px rgba(30, 144, 255, 0.3);
         }
 
@@ -313,7 +324,6 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-bottom: 12px;
         }
 
         .user-avatar i {
@@ -331,7 +341,7 @@
         .user-id {
             display: inline-block;
             padding: 4px 12px;
-            background: rgba(30, 144, 255, 0.2); /* Ko'k rang */
+            background: rgba(30, 144, 255, 0.2);
             color: var(--primary);
             border-radius: 12px;
             font-size: 11px;
@@ -369,7 +379,7 @@
         .stat-value {
             font-size: 20px;
             font-weight: 700;
-            color: var(--primary); /* Ko'k rang */
+            color: var(--primary);
             margin-bottom: 4px;
         }
 
@@ -379,7 +389,65 @@
             font-weight: 600;
         }
 
-        /* YANGI: Asosiy harakatlar tugmalari */
+        /* Yangi: Telegram asosiy harakat karti */
+        .telegram-main-card {
+            background: linear-gradient(135deg, var(--telegram), #006699);
+            border: 1px solid rgba(0, 136, 204, 0.3);
+            border-radius: 16px;
+            padding: 20px;
+            margin: 0 20px 20px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 20px rgba(0, 136, 204, 0.2);
+        }
+
+        .telegram-main-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 25px rgba(0, 136, 204, 0.3);
+        }
+
+        .telegram-main-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .telegram-main-icon i {
+            font-size: 24px;
+            color: white;
+        }
+
+        .telegram-main-content {
+            flex: 1;
+        }
+
+        .telegram-main-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 4px;
+        }
+
+        .telegram-main-desc {
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.9);
+            line-height: 1.4;
+        }
+
+        .telegram-main-arrow {
+            color: white;
+            font-size: 16px;
+            opacity: 0.8;
+        }
+
         .main-actions {
             padding: 0 20px 20px;
             display: grid;
@@ -414,7 +482,6 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            flex-shrink: 0;
         }
 
         .main-action-icon i {
@@ -444,7 +511,6 @@
             font-size: 16px;
         }
 
-        /* Yangi ro'yxatdan o'tish bannerni o'zgartiramiz */
         .register-promo {
             margin: 0 20px 20px;
             background: linear-gradient(135deg, var(--primary), var(--primary-dark));
@@ -505,7 +571,7 @@
             font-size: 20px;
             font-weight: 700;
             color: white;
-            letter-spacing: 2px;
+            letter-spcing: 2px;
         }
 
         .quick-actions {
@@ -530,6 +596,10 @@
             transform: translateY(-2px);
         }
 
+        .action-card#telegramBtn:hover {
+            border-color: var(--telegram);
+        }
+
         .action-icon {
             width: 36px;
             height: 36px;
@@ -541,6 +611,10 @@
             justify-content: center;
         }
 
+        .action-card#telegramBtn .action-icon {
+            background: linear-gradient(135deg, var(--telegram), #006699);
+        }
+
         .action-icon i {
             font-size: 16px;
             color: white;
@@ -549,7 +623,7 @@
         .action-title {
             font-size: 11px;
             font-weight: 600;
-            color: var(--primary); /* Ko'k rang */
+            color: var(--primary);
             margin-bottom: 4px;
         }
 
@@ -624,7 +698,7 @@
         .section-title {
             font-size: 16px;
             font-weight: 700;
-            color: var(--primary); /* Ko'k rang */
+            color: var(--primary);
             text-shadow: 0 0 5px rgba(30, 144, 255, 0.2);
         }
 
@@ -672,7 +746,7 @@
         .stat-card-title {
             font-size: 12px;
             font-weight: 600;
-            color: var(--primary); /* Ko'k rang */
+            color: var(--primary);
         }
 
         .stat-card-value {
@@ -717,7 +791,7 @@
         }
 
         .nav-item.active {
-            color: var(--primary); /* Ko'k rang */
+            color: var(--primary);
         }
 
         .nav-icon {
@@ -771,7 +845,7 @@
         .modal-title {
             font-size: 16px;
             font-weight: 700;
-            color: var(--primary); /* Ko'k rang */
+            color: var(--primary);
         }
 
         .modal-close {
@@ -792,7 +866,7 @@
         }
 
         .game-user-id {
-            background: rgba(30, 144, 255, 0.1); /* Ko'k rang */
+            background: rgba(30, 144, 255, 0.1);
             border-radius: 12px;
             padding: 12px;
             margin-bottom: 16px;
@@ -803,7 +877,7 @@
         .user-id-display {
             font-size: 18px;
             font-weight: 700;
-            color: var(--primary); /* Ko'k rang */
+            color: var(--primary);
             font-family: 'Courier New', monospace;
             letter-spacing: 1px;
             margin-bottom: 6px;
@@ -823,7 +897,7 @@
         .game-title {
             font-size: 20px;
             font-weight: 700;
-            color: var(--primary); /* Ko'k rang */
+            color: var(--primary);
             text-shadow: 0 0 10px rgba(30, 144, 255, 0.3);
             margin-bottom: 8px;
         }
@@ -992,21 +1066,29 @@
                 min-width: 50px;
             }
             
+            .telegram-main-card,
             .main-action-card {
                 padding: 16px;
             }
             
+            .telegram-main-icon,
             .main-action-icon {
                 width: 40px;
                 height: 40px;
             }
             
+            .telegram-main-icon i,
             .main-action-icon i {
                 font-size: 20px;
             }
             
+            .telegram-main-title,
             .main-action-title {
                 font-size: 16px;
+            }
+            
+            .quick-actions {
+                grid-template-columns: repeat(2, 1fr);
             }
         }
 
@@ -1016,10 +1098,6 @@
                 height: 45px;
                 min-width: 45px;
             }
-            
-            .quick-actions {
-                grid-template-columns: repeat(2, 1fr);
-            }
         }
 
         @media (max-width: 280px) {
@@ -1028,10 +1106,14 @@
                 height: 40px;
                 min-width: 40px;
             }
+            
+            .quick-actions {
+                grid-template-columns: 1fr;
+            }
         }
 
         .game-info {
-            background: rgba(30, 144, 255, 0.1); /* Ko'k rang */
+            background: rgba(30, 144, 255, 0.1);
             border-radius: 12px;
             padding: 16px;
             margin: 16px 0;
@@ -1150,14 +1232,14 @@
             position: absolute;
             width: 100%;
             height: 2px;
-            background: var(--primary); /* Ko'k rang */
+            background: var(--primary);
             animation: scanLine 2s linear infinite;
         }
 
         .hacking-text {
             font-size: 32px;
             font-weight: 700;
-            color: var(--primary); /* Ko'k rang */
+            color: var(--primary);
             text-shadow: 0 0 10px rgba(30, 144, 255, 0.5);
             font-family: 'Courier New', monospace;
             margin-bottom: 20px;
@@ -1166,7 +1248,7 @@
 
         .hacking-subtitle {
             font-size: 16px;
-            color: var(--primary); /* Ko'k rang */
+            color: var(--primary);
             font-family: 'Courier New', monospace;
             margin-bottom: 15px;
             opacity: 0.8;
@@ -1175,7 +1257,7 @@
         .hacking-percentage {
             font-size: 48px;
             font-weight: 700;
-            color: var(--primary); /* Ko'k rang */
+            color: var(--primary);
             font-family: 'Courier New', monospace;
             margin-bottom: 30px;
             text-shadow: 0 0 15px rgba(30, 144, 255, 0.5);
@@ -1183,7 +1265,7 @@
 
         .hacking-message {
             font-size: 14px;
-            color: var(--primary); /* Ko'k rang */
+            color: var(--primary);
             font-family: 'Courier New', monospace;
             margin-top: 20px;
             text-align: center;
@@ -1194,7 +1276,7 @@
         .hacking-binary {
             position: absolute;
             font-size: 12px;
-            color: var(--primary); /* Ko'k rang */
+            color: var(--primary);
             opacity: 0.3;
             font-family: 'Courier New', monospace;
             pointer-events: none;
@@ -1340,7 +1422,7 @@
         .page-title {
             font-size: 18px;
             font-weight: 700;
-            color: var(--primary); /* Ko'k rang */
+            color: var(--primary);
         }
 
         .page-content {
@@ -1495,7 +1577,7 @@
             display: inline-block;
             width: 24px;
             height: 24px;
-            background: var(--primary); /* Ko'k rang */
+            background: var(--primary);
             color: white;
             border-radius: 50%;
             text-align: center;
@@ -1573,7 +1655,7 @@
         }
 
         .toast.info {
-            border-left: 4px solid var(--primary); /* Ko'k rang */
+            border-left: 4px solid var(--primary);
         }
 
         .toast.warning {
@@ -1713,7 +1795,21 @@
             </div>
         </header>
 
-        <!-- YANGI: Asosiy harakatlar bloki - Eng yuqori qismda -->
+        <!-- YANGI: Telegram asosiy harakat kartasi - ENG YUQORIDA -->
+        <div class="telegram-main-card" id="telegramMainCard">
+            <div class="telegram-main-icon">
+                <i class="fab fa-telegram"></i>
+            </div>
+            <div class="telegram-main-content">
+                <div class="telegram-main-title" id="telegramMainTitle">TELEGRAM BOTGA A'ZO BO'LING</div>
+                <div class="telegram-main-desc" id="telegramMainDesc">Signallarni doimiy ravishda olish uchun telegram botimizga qo'shiling. Real vaqtda yangilanishlar!</div>
+            </div>
+            <div class="telegram-main-arrow">
+                <i class="fas fa-chevron-right"></i>
+            </div>
+        </div>
+
+        <!-- Asosiy harakatlar bloki -->
         <section class="main-actions">
             <!-- Ro'yxatdan o'tish kartasi -->
             <div class="main-action-card" id="mainRegisterCard">
@@ -1862,11 +1958,11 @@
                 <div class="nav-text">VIP</div>
             </div>
             
-            <div class="nav-item" id="navApk">
+            <div class="nav-item" id="navTelegram">
                 <div class="nav-icon">
-                    <i class="fas fa-download"></i>
+                    <i class="fab fa-telegram"></i>
                 </div>
-                <div class="nav-text">APK</div>
+                <div class="nav-text">TELEGRAM</div>
             </div>
             
             <div class="nav-item" id="navSettings">
@@ -1938,14 +2034,14 @@
                 <div class="nav-text">VIP</div>
             </div>
             
-            <div class="nav-item active" id="navApk2">
+            <div class="nav-item" id="navTelegram2">
                 <div class="nav-icon">
-                    <i class="fas fa-download"></i>
+                    <i class="fab fa-telegram"></i>
                 </div>
-                <div class="nav-text">APK</div>
+                <div class="nav-text">TELEGRAM</div>
             </div>
             
-            <div class="nav-item" id="navSettings2">
+            <div class="nav-item active" id="navSettings2">
                 <div class="nav-icon">
                     <i class="fas fa-cog"></i>
                 </div>
@@ -2036,11 +2132,11 @@
                 <div class="nav-text">VIP</div>
             </div>
             
-            <div class="nav-item" id="navApk3">
+            <div class="nav-item" id="navTelegram3">
                 <div class="nav-icon">
-                    <i class="fas fa-download"></i>
+                    <i class="fab fa-telegram"></i>
                 </div>
-                <div class="nav-text">APK</div>
+                <div class="nav-text">TELEGRAM</div>
             </div>
             
             <div class="nav-item active" id="navSettings3">
@@ -2063,6 +2159,21 @@
         
         <div class="page-content">
             <div class="settings-list">
+                <div class="settings-item" id="settingsTelegram">
+                    <div class="settings-item-left">
+                        <div class="settings-icon">
+                            <i class="fab fa-telegram"></i>
+                        </div>
+                        <div class="settings-text">
+                            <h4 id="settingsTelegramTitle">Telegram kanali</h4>
+                            <p id="settingsTelegramDesc">Botga a'zo bo'ling</p>
+                        </div>
+                    </div>
+                    <div class="settings-arrow">
+                        <i class="fas fa-chevron-right"></i>
+                    </div>
+                </div>
+                
                 <div class="settings-item" id="settingsLanguage">
                     <div class="settings-item-left">
                         <div class="settings-icon">
@@ -2199,11 +2310,11 @@
                 <div class="nav-text">VIP</div>
             </div>
             
-            <div class="nav-item" id="navApk4">
+            <div class="nav-item" id="navTelegram4">
                 <div class="nav-icon">
-                    <i class="fas fa-download"></i>
+                    <i class="fab fa-telegram"></i>
                 </div>
-                <div class="nav-text">APK</div>
+                <div class="nav-text">TELEGRAM</div>
             </div>
             
             <div class="nav-item active" id="navSettings4">
@@ -2342,7 +2453,7 @@
         </div>
     </div>
 
-    <!-- VIP MODAL - 5 TA DO'ST TAKLIF QILISH BILAN -->
+    <!-- VIP MODAL -->
     <div class="modal-overlay" id="vipModal">
         <div class="modal-content">
             <div class="modal-header">
@@ -2472,6 +2583,8 @@
                 invitesLabel: "TAKLIFLAR",
                 accuracyLabel: "ANIQLIK",
                 friendsLabel: "DO'STLAR",
+                telegramMainTitle: "TELEGRAM BOTGA A'ZO BO'LING",
+                telegramMainDesc: "Signallarni doimiy ravishda olish uchun telegram botimizga qo'shiling. Real vaqtda yangilanishlar!",
                 mainRegisterTitle: "RO'YXATDAN O'TISH",
                 mainRegisterDesc: "AIFUT promokodi bilan apple of fortune-da ro'yxatdan o'ting va yuqori aniqlikdagi signallarga ega bo'ling",
                 mainSignalTitle: "SIGNAL OLISH",
@@ -2484,8 +2597,12 @@
                 apkDesc: "Yuklab olish",
                 bonusTitle: "BONUS",
                 bonusDesc: "Promokodlar",
+                telegramTitle: "TELEGRAM",
+                telegramDesc: "Botga a'zo bo'lish",
                 settingsTitle: "SOZLAMALAR",
                 settingsDesc: "Til va boshqalar",
+                settingsTelegramTitle: "Telegram kanali",
+                settingsTelegramDesc: "Botga a'zo bo'ling",
                 vipBannerTitle: "VIP A'ZO BO'LING",
                 vipBannerDesc: "30% ko'proq bonus[citation:1]",
                 registerPromoTitle: "SIGNAL OLISH UCHUN RO'YXATDAN O'TING",
@@ -2528,6 +2645,9 @@
                 errorSignal: "❌ O'yin tugadi.",
                 successBonus: "✅ Bonus olindi!",
                 successInvite: "✅ Do'st taklif qilindi! Darajangiz oshdi!",
+                telegramJoinSuccess: "✅ Telegram botga qo'shildingiz!",
+                telegramJoinError: "❌ Telegram botga qo'shilmadingiz",
+                telegramChannelLink: "https://t.me/Strategioyinlar_bot",
                 loading: "⏳ Yuklanmoqda...",
                 winGame: "TABRIKLAYMIZ!",
                 winMessage: "Yutuqni oling!",
@@ -2594,6 +2714,8 @@
                 invitesLabel: "ПРИГЛАШЕНИЯ",
                 accuracyLabel: "ТОЧНОСТЬ",
                 friendsLabel: "ДРУЗЬЯ",
+                telegramMainTitle: "ПОДПИШИТЕСЬ НА ТЕЛЕГРАМ БОТ",
+                telegramMainDesc: "Присоединяйтесь к нашему телеграм боту для постоянного получения сигналов. Обновления в реальном времени!",
                 mainRegisterTitle: "РЕГИСТРАЦИЯ",
                 mainRegisterDesc: "Зарегистрируйтесь в  через промокод AIFUT и получите доступ к высокоточным сигналам",
                 mainSignalTitle: "ПОЛУЧИТЬ СИГНАЛ",
@@ -2606,8 +2728,12 @@
                 apkDesc: "Скачать",
                 bonusTitle: "БОНУС",
                 bonusDesc: "Промокоды",
+                telegramTitle: "TEЛЕГРАМ",
+                telegramDesc: "Подписаться на бота",
                 settingsTitle: "НАСТРОЙКИ",
                 settingsDesc: "Язык и другое",
+                settingsTelegramTitle: "Телеграм канал",
+                settingsTelegramDesc: "Подпишитесь на бота",
                 vipBannerTitle: "СТАНЬТЕ VIP",
                 vipBannerDesc: "30% больше бонуса[citation:1]",
                 registerPromoTitle: "ЗАРЕГИСТРИРУЙТЕСЬ ДЛЯ ПОЛУЧЕНИЯ СИГНАЛОВ",
@@ -2650,6 +2776,9 @@
                 errorSignal: "❌ Игра окончена.",
                 successBonus: "✅ Бонус получен!",
                 successInvite: "✅ Друг приглашен! Ваш уровень повысился!",
+                telegramJoinSuccess: "✅ Вы присоединились к Telegram боту!",
+                telegramJoinError: "❌ Не удалось присоединиться к Telegram боту",
+                telegramChannelLink: "https://t.me/Strategioyinlar_bot",
                 loading: "⏳ Загрузка...",
                 winGame: "ПОЗДРАВЛЯЕМ!",
                 winMessage: "Получите приз!",
@@ -2716,6 +2845,8 @@
                 invitesLabel: "INVITES",
                 accuracyLabel: "ACCURACY",
                 friendsLabel: "FRIENDS",
+                telegramMainTitle: "JOIN TELEGRAM BOT",
+                telegramMainDesc: "Join our Telegram bot for continuous signal updates. Real-time notifications!",
                 mainRegisterTitle: "REGISTER",
                 mainRegisterDesc: "Register at  through AIFUT promo code and get access to high accuracy signals",
                 mainSignalTitle: "GET SIGNAL",
@@ -2728,8 +2859,12 @@
                 apkDesc: "Download",
                 bonusTitle: "BONUS",
                 bonusDesc: "Promo codes",
+                telegramTitle: "TELEGRAM",
+                telegramDesc: "Join bot",
                 settingsTitle: "SETTINGS",
                 settingsDesc: "Language and more",
+                settingsTelegramTitle: "Telegram channel",
+                settingsTelegramDesc: "Join our bot",
                 vipBannerTitle: "BECOME VIP",
                 vipBannerDesc: "30% More Bonus[citation:1]",
                 registerPromoTitle: "REGISTER TO GET SIGNALS",
@@ -2772,6 +2907,9 @@
                 errorSignal: "❌ Game over.",
                 successBonus: "✅ Bonus received!",
                 successInvite: "✅ Friend invited! Your level increased!",
+                telegramJoinSuccess: "✅ Joined Telegram bot!",
+                telegramJoinError: "❌ Failed to join Telegram bot",
+                telegramChannelLink: "https://t.me/Strategioyinlar_bot",
                 loading: "⏳ Loading...",
                 winGame: "CONGRATULATIONS!",
                 winMessage: "Get your prize!",
@@ -2838,6 +2976,8 @@
                 invitesLabel: "الدعوات",
                 accuracyLabel: "الدقة",
                 friendsLabel: "الأصدقاء",
+                telegramMainTitle: "انضم إلى بوت تيليجرام",
+                telegramMainDesc: "انضم إلى بوت تيليجرام الخاص بنا للحصول على تحديثات الإشارات المستمرة. إشعارات في الوقت الحقيقي!",
                 mainRegisterTitle: "تسجيل",
                 mainRegisterDesc: "سجل في apple of fortune من خلال الرمز الترويجي AIFUT واحصل على إشارات عالية الدقة",
                 mainSignalTitle: "الحصول على إشارة",
@@ -2850,8 +2990,12 @@
                 apkDesc: "تحميل",
                 bonusTitle: "مكافأة",
                 bonusDesc: "رموز ترويجية",
+                telegramTitle: "تيليجرام",
+                telegramDesc: "انضم إلى البوت",
                 settingsTitle: "إعدادات",
                 settingsDesc: "اللغة والمزيد",
+                settingsTelegramTitle: "قناة تيليجرام",
+                settingsTelegramDesc: "انضم إلى بوتنا",
                 vipBannerTitle: "كن VIP",
                 vipBannerDesc: "30٪ مكافأة أكثر[citation:1]",
                 registerPromoTitle: "سجل للحصول على إشارات",
@@ -2894,6 +3038,9 @@
                 errorSignal: "❌ انتهت اللعبة.",
                 successBonus: "✅ تم استلام المكافأة!",
                 successInvite: "✅ تمت دعوة الصديق! ارتفع مستواك!",
+                telegramJoinSuccess: "✅ انضممت إلى بوت تيليجرام!",
+                telegramJoinError: "❌ فشل الانضمام إلى بوت تيليجرام",
+                telegramChannelLink: "https://t.me/Strategioyinlar_bot",
                 loading: "⏳ جاري التحميل...",
                 winGame: "مبروك!",
                 winMessage: "احصل على جائزتك!",
@@ -3041,33 +3188,36 @@
             });
 
             document.getElementById('settingsBtn').addEventListener('click', () => showPage('settingsPage'));
-            document.getElementById('settingsBtn2').addEventListener('click', () => showPage('settingsPage'));
+            document.getElementById('settingsBtn2')?.addEventListener('click', () => showPage('settingsPage'));
 
             document.getElementById('navHome').addEventListener('click', () => showPage('mainContainer'));
             document.getElementById('navSignal').addEventListener('click', () => showGameModal());
             document.getElementById('navVip').addEventListener('click', () => showVipModal());
-            document.getElementById('navApk').addEventListener('click', () => showPage('apkPage'));
+            document.getElementById('navTelegram').addEventListener('click', joinTelegram);
             document.getElementById('navSettings').addEventListener('click', () => showPage('settingsPage'));
 
             document.getElementById('navHome2').addEventListener('click', () => showPage('mainContainer'));
             document.getElementById('navSignal2').addEventListener('click', () => showGameModal());
             document.getElementById('navVip2').addEventListener('click', () => showVipModal());
-            document.getElementById('navApk2').addEventListener('click', () => showPage('apkPage'));
+            document.getElementById('navTelegram2').addEventListener('click', joinTelegram);
             document.getElementById('navSettings2').addEventListener('click', () => showPage('settingsPage'));
 
             document.getElementById('navHome3').addEventListener('click', () => showPage('mainContainer'));
             document.getElementById('navSignal3').addEventListener('click', () => showGameModal());
             document.getElementById('navVip3').addEventListener('click', () => showVipModal());
-            document.getElementById('navApk3').addEventListener('click', () => showPage('apkPage'));
+            document.getElementById('navTelegram3').addEventListener('click', joinTelegram);
             document.getElementById('navSettings3').addEventListener('click', () => showPage('settingsPage'));
 
             document.getElementById('navHome4').addEventListener('click', () => showPage('mainContainer'));
             document.getElementById('navSignal4').addEventListener('click', () => showGameModal());
             document.getElementById('navVip4').addEventListener('click', () => showVipModal());
-            document.getElementById('navApk4').addEventListener('click', () => showPage('apkPage'));
+            document.getElementById('navTelegram4').addEventListener('click', joinTelegram);
             document.getElementById('navSettings4').addEventListener('click', () => showPage('settingsPage'));
 
-            // Yangi asosiy harakatlar kartalari
+            // Yangi Telegram asosiy kartasi
+            document.getElementById('telegramMainCard').addEventListener('click', joinTelegram);
+
+            // Asosiy harakatlar kartalari
             document.getElementById('mainRegisterCard').addEventListener('click', registerUser);
             document.getElementById('mainSignalCard').addEventListener('click', () => showGameModal());
 
@@ -3075,6 +3225,7 @@
             document.getElementById('vipBanner').addEventListener('click', () => showVipModal());
             document.getElementById('apkBtn').addEventListener('click', () => showPage('apkPage'));
             document.getElementById('bonusBtn').addEventListener('click', () => showPage('bonusPage'));
+            document.getElementById('telegramBtn')?.addEventListener('click', joinTelegram);
 
             document.getElementById('backFromApk').addEventListener('click', () => showPage('mainContainer'));
             document.getElementById('backFromBonus').addEventListener('click', () => showPage('mainContainer'));
@@ -3084,6 +3235,7 @@
             document.getElementById('closeVipModal').addEventListener('click', () => closeModal('vipModal'));
             document.getElementById('closeChangeIdModal').addEventListener('click', () => closeModal('changeIdModal'));
 
+            document.getElementById('settingsTelegram').addEventListener('click', joinTelegram);
             document.getElementById('settingsLanguage').addEventListener('click', () => {
                 document.getElementById('languageSelector').style.display = 'flex';
                 document.getElementById('settingsPage').classList.remove('active');
@@ -3309,9 +3461,11 @@
                     activeNavIds = ['navHome', 'navHome2', 'navHome3', 'navHome4'];
                     break;
                 case 'apkPage':
-                    activeNavIds = ['navApk', 'navApk2', 'navApk3', 'navApk4'];
+                    activeNavIds = ['navSettings2'];
                     break;
                 case 'bonusPage':
+                    activeNavIds = ['navSettings3'];
+                    break;
                 case 'settingsPage':
                     activeNavIds = ['navSettings', 'navSettings2', 'navSettings3', 'navSettings4'];
                     break;
@@ -3483,6 +3637,18 @@
         function registerUser() {
             window.open('https://superlative-twilight-47ef34.netlify.app/', '_blank');
             showToast(translations[currentLang].registerLinkOpened, 'success');
+        }
+
+        function joinTelegram() {
+            const t = translations[currentLang];
+            window.open(t.telegramChannelLink, '_blank');
+            showToast(t.telegramJoinSuccess, 'success');
+            
+            // Statistikani yangilash
+            dailyStats.activeUsers += Math.floor(Math.random() * 5) + 1;
+            dailyStats.onlinePlayers += Math.floor(Math.random() * 3) + 1;
+            updateDailyStats();
+            saveData();
         }
 
         function createApples() {
