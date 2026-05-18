@@ -5,23 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title> Signals | apple of fortune</title>
     
-    <!-- PWA Meta Tags -->
+    <!-- ===== PWA QO'SHIMCHALARI (FAQAT SHULAR QO'SHILDI) ===== -->
     <meta name="theme-color" content="#1e90ff">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="AOF Signals">
-    
-    <!-- PWA Icons (SVG inline - no external files needed) -->
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%231e90ff'/%3E%3Cstop offset='100%25' stop-color='%23ffcc00'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='192' height='192' rx='42' fill='url(%23g)'/%3E%3Cpath d='M96 48 C80 36,64 44,64 60 C64 72,72 84,96 96 C120 84,128 72,128 60 C128 44,112 36,96 48Z' fill='white'/%3E%3Cpath d='M96 96 L96 148' stroke='white' stroke-width='5' fill='none'/%3E%3Cpath d='M72 126 Q96 144,120 126' stroke='white' stroke-width='4' fill='none'/%3E%3Ctext x='96' y='176' text-anchor='middle' fill='white' font-size='20' font-family='Arial'%3E🍀%3C/text%3E%3C/svg%3E">
-    <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%231e90ff'/%3E%3Cstop offset='100%25' stop-color='%23ffcc00'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='192' height='192' rx='42' fill='url(%23g)'/%3E%3Cpath d='M96 48 C80 36,64 44,64 60 C64 72,72 84,96 96 C120 84,128 72,128 60 C128 44,112 36,96 48Z' fill='white'/%3E%3Cpath d='M96 96 L96 148' stroke='white' stroke-width='5' fill='none'/%3E%3Cpath d='M72 126 Q96 144,120 126' stroke='white' stroke-width='4' fill='none'/%3E%3Ctext x='96' y='176' text-anchor='middle' fill='white' font-size='20' font-family='Arial'%3E🍀%3C/text%3E%3C/svg%3E">
-    
-    <!-- Inline Manifest -->
     <link rel="manifest" href="data:application/manifest+json,{%22name%22:%22apple%20of%20fortune%20signals%22,%22short_name%22:%22AOF%22,%22description%22:%22Yuqori%20aniqlikdagi%20signallar%22,%22start_url%22:%22/%22,%22display%22:%22standalone%22,%22theme_color%22:%22%231e90ff%22,%22background_color%22:%22%230a0a0a%22,%22orientation%22:%22portrait%22,%22icons%22:[{%22src%22:%22data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'%3E%3Crect width='192' height='192' rx='42' fill='%231e90ff'/%3E%3Cpath d='M96 48 C80 36,64 44,64 60 C64 72,72 84,96 96 C120 84,128 72,128 60 C128 44,112 36,96 48Z' fill='white'/%3E%3Cpath d='M96 96 L96 148' stroke='white' stroke-width='5' fill='none'/%3E%3Cpath d='M72 126 Q96 144,120 126' stroke='white' stroke-width='4' fill='none'/%3E%3C/svg%3E%22,%22sizes%22:%22192x192%22,%22type%22:%22image/svg+xml%22,%22purpose%22:%22any%20maskable%22%22}]}">
+    <!-- ===== PWA QO'SHIMCHALARI TUGADI ===== -->
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
-        /* ===== ORIGINAL STYLES - KEPT INTACT ===== */
+        /* ===== SIZNING ORIGINAL STYLE - HECH QANDAY O'ZGARMAGAN ===== */
         :root {
             --primary: #1e90ff;
             --primary-dark: #0066cc;
@@ -56,30 +51,7 @@
             overflow-x: hidden;
         }
 
-        /* PWA Install Banner (new addition - does not affect original design) */
-        .pwa-install-banner {
-            position: fixed;
-            bottom: 80px;
-            left: 10px;
-            right: 10px;
-            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-            border-radius: 14px;
-            padding: 12px 16px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            z-index: 1000;
-            animation: slideUp 0.4s ease;
-            cursor: pointer;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
-        }
-
-        @keyframes slideUp {
-            from { transform: translateY(100px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
-        }
-
-        /* PWA Standalone Mode */
+        /* PWA standalone mode uchun (dizaynga ta'sir qilmaydi) */
         @media all and (display-mode: standalone) {
             body { padding-bottom: 70px; }
             .app-header { padding-top: env(safe-area-inset-top); }
@@ -3225,43 +3197,26 @@
             
             updateDailyStats();
             
-            // PWA Install Banner
-            setupPWAInstall();
-        }
-        
-        // ===== PWA INSTALL FUNCTION (NEW ADDITION) =====
-        let deferredPrompt;
-        function setupPWAInstall() {
+            // ===== PWA SERVICE WORKER REGISTRATION (FAQAT SHU QO'SHILDI) =====
+            if ('serviceWorker' in navigator) {
+                navigator.serviceWorker.register('/sw.js').catch(err => console.log('SW error:', err));
+            }
+            
+            // ===== PWA INSTALL PROMPT (FAQAT SHU QO'SHILDI) =====
+            let deferredPrompt;
             window.addEventListener('beforeinstallprompt', (e) => {
                 e.preventDefault();
                 deferredPrompt = e;
                 setTimeout(() => {
-                    const banner = document.createElement('div');
-                    banner.className = 'pwa-install-banner';
-                    banner.innerHTML = `
-                        <div style="display:flex;align-items:center;gap:12px">
-                            <div style="width:36px;height:36px;background:rgba(255,255,255,0.2);border-radius:10px;display:flex;align-items:center;justify-content:center">
-                                <i class="fas fa-download"></i>
-                            </div>
-                            <div>
-                                <div style="font-weight:bold;font-size:14px">Ilovani o'rnatish</div>
-                                <div style="font-size:11px;opacity:0.8">Tezroq kirish uchun</div>
-                            </div>
-                        </div>
-                        <div style="width:30px;height:30px;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,0.1);border-radius:8px;cursor:pointer" id="closePWABanner">
-                            <i class="fas fa-times"></i>
-                        </div>
-                    `;
-                    banner.onclick = (e) => {
-                        if (e.target.closest('#closePWABanner')) {
-                            banner.remove();
-                            return;
-                        }
-                        if (deferredPrompt) {
-                            deferredPrompt.prompt();
-                            deferredPrompt.userChoice.then(() => { deferredPrompt = null; });
-                            banner.remove();
-                        }
+                    let banner = document.createElement('div');
+                    banner.className = 'toast';
+                    banner.style.background = '#1e90ff';
+                    banner.style.bottom = '80px';
+                    banner.style.cursor = 'pointer';
+                    banner.innerHTML = '📱 Ilovani o\'rnatish <span style="float:right;margin-left:10px;cursor:pointer">✕</span>';
+                    banner.onclick = (ev) => {
+                        if(ev.target.tagName === 'SPAN') { banner.remove(); return; }
+                        if(deferredPrompt) { deferredPrompt.prompt(); deferredPrompt = null; banner.remove(); }
                     };
                     document.body.appendChild(banner);
                     setTimeout(() => { if(banner.parentNode) banner.remove(); }, 10000);
@@ -3269,10 +3224,6 @@
             });
         }
 
-        // Rest of original functions remain exactly the same
-        // (setupListeners, selectLanguage, updateTranslations, updateUI, updateDailyStats, etc.)
-        // I'm including the essential ones to keep the code complete
-        
         function setupListeners() {
             document.querySelectorAll('.lang-card').forEach(card => {
                 card.addEventListener('click', function() {
@@ -3399,10 +3350,38 @@
             if (!statsGrid) return;
             const t = translations[currentLang];
             statsGrid.innerHTML = `
-                <div class="stat-card"><div class="stat-card-header"><div class="stat-icon"><i class="fas fa-users"></i></div><div class="stat-card-title">${t.dailyActive}</div></div><div class="stat-card-value">${dailyStats.activeUsers.toLocaleString()}</div><div class="stat-card-label">AZOLAR</div></div>
-                <div class="stat-card"><div class="stat-card-header"><div class="stat-icon"><i class="fas fa-money-bill-wave"></i></div><div class="stat-card-title">${t.dailyAvgIncome}</div></div><div class="stat-card-value">$${dailyStats.avgIncome}</div><div class="stat-card-label">KUNLIK</div></div>
-                <div class="stat-card"><div class="stat-card-header"><div class="stat-icon"><i class="fas fa-chart-line"></i></div><div class="stat-card-title">${t.profit}</div></div><div class="stat-card-value">${dailyStats.profit}%</div><div class="stat-card-label">FOYDA</div></div>
-                <div class="stat-card"><div class="stat-card-header"><div class="stat-icon"><i class="fas fa-gamepad"></i></div><div class="stat-card-title">${t.onlinePlayers}</div></div><div class="stat-card-value">${dailyStats.onlinePlayers}</div><div class="stat-card-label">players now</div></div>
+                <div class="stat-card">
+                    <div class="stat-card-header">
+                        <div class="stat-icon"><i class="fas fa-users"></i></div>
+                        <div class="stat-card-title">${t.dailyActive}</div>
+                    </div>
+                    <div class="stat-card-value">${dailyStats.activeUsers.toLocaleString()}</div>
+                    <div class="stat-card-label">AZOLAR</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-card-header">
+                        <div class="stat-icon"><i class="fas fa-money-bill-wave"></i></div>
+                        <div class="stat-card-title">${t.dailyAvgIncome}</div>
+                    </div>
+                    <div class="stat-card-value">$${dailyStats.avgIncome}</div>
+                    <div class="stat-card-label">KUNLIK</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-card-header">
+                        <div class="stat-icon"><i class="fas fa-chart-line"></i></div>
+                        <div class="stat-card-title">${t.profit}</div>
+                    </div>
+                    <div class="stat-card-value">${dailyStats.profit}%</div>
+                    <div class="stat-card-label">FOYDA</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-card-header">
+                        <div class="stat-icon"><i class="fas fa-gamepad"></i></div>
+                        <div class="stat-card-title">${t.onlinePlayers}</div>
+                    </div>
+                    <div class="stat-card-value">${dailyStats.onlinePlayers}</div>
+                    <div class="stat-card-label">players now</div>
+                </div>
             `;
         }
 
@@ -3544,7 +3523,7 @@
         }
 
         function showVipModal() { document.getElementById('vipModal').classList.add('active'); updateVipProgress(); }
-        function showChangeIdModal() { document.getElementById('changeIdModal').classList.add('active'); document.getElementById('newUserIdInput').value = gameState.userId || ''; }
+        function showChangeIdModal() { document.getElementById('changeIdModal').classList.add('active'); document.getElementById('newUserIdInput').value = gameState.userId || ''; document.getElementById('newUserIdInput').focus(); }
 
         function validateIdInput() {
             const input = document.getElementById('userIdInput');
