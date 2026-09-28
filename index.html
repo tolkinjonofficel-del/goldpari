@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
     <title>Apple of Fortune | Premium Signals</title>
-    
+
     <!-- PWA MANIFEST -->
     <link rel="manifest" href="data:application/manifest+json,{
         %22name%22:%22Apple%20of%20Fortune%20Premium%22,
@@ -20,455 +20,1540 @@
             {%22src%22:%22data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20512%20512'%3E%3Crect%20width='512'%20height='512'%20rx='112'%20fill='%23ff0000'/%3E%3Ctext%20x='256'%20y='340'%20text-anchor='middle'%20fill='white'%20font-size='220'%20font-weight='bold'%3EA%3C/text%3E%3C/svg%3E%22,%22sizes%22:%22512x512%22,%22type%22:%22image/svg+xml%22,%22purpose%22:%22any%20maskable%22%7D
         ]
     }">
-    
+
     <meta name="theme-color" content="#ff0000">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="AOF Premium">
     <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'%3E%3Crect width='192' height='192' rx='42' fill='%23ff0000'/%3E%3Ctext x='96' y='128' text-anchor='middle' fill='white' font-size='80' font-weight='bold'%3EA%3C/text%3E%3C/svg%3E">
-    
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
-    
+
     <style>
-        * {
+        *, *::before, *::after {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Arial, sans-serif;
+            -webkit-tap-highlight-color: transparent;
         }
+
+        :root {
+            --primary: #ff0000;
+            --primary-dark: #cc0000;
+            --primary-light: #ff4444;
+            --bg: #000000;
+            --bg-card: #0d0d0d;
+            --bg-elevated: #141414;
+            --bg-input: #1a1a1a;
+            --text: #ffffff;
+            --text-muted: #888888;
+            --text-dim: #555555;
+            --border: rgba(255, 0, 0, 0.15);
+            --success: #00c853;
+            --danger: #ff1744;
+            --info: #0088cc;
+            --warning: #ffaa00;
+            --gold: #ffd700;
+            --telegram: #0088cc;
+            --radius-sm: 12px;
+            --radius-md: 16px;
+            --radius-lg: 20px;
+            --radius-xl: 24px;
+            --shadow-red: 0 8px 32px rgba(255, 0, 0, 0.25);
+            --shadow-dark: 0 8px 24px rgba(0, 0, 0, 0.6);
+            --transition: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        html { scroll-behavior: smooth; }
 
         body {
-            background: linear-gradient(135deg, #000000 0%, #1a0000 50%, #000000 100%);
-            color: #fff;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'SF Pro Display', Arial, sans-serif;
+            background: var(--bg);
+            color: var(--text);
             min-height: 100vh;
-            padding-bottom: 70px;
+            min-height: 100dvh;
+            padding-bottom: 80px;
+            overflow-x: hidden;
+            position: relative;
+            -webkit-font-smoothing: antialiased;
         }
 
-        @media all and (display-mode: standalone) {
-            .install-btn-container { display: none !important; }
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background:
+                radial-gradient(circle at 20% 0%, rgba(255, 0, 0, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 100%, rgba(255, 0, 0, 0.1) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 0;
         }
 
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); box-shadow: 0 4px 20px rgba(255,0,0,0.4); }
-            50% { transform: scale(1.05); box-shadow: 0 8px 40px rgba(255,0,0,0.8); }
-        }
-        @keyframes slideUp {
-            from { transform: translateY(100%); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
-        }
-        @keyframes pulseText {
-            0%, 100% { opacity: 1; text-shadow: 0 0 5px #ff0000; }
-            50% { opacity: 0.7; text-shadow: 0 0 20px #ff0000; }
-        }
-        @keyframes winAnim {
-            0% { transform: scale(0); opacity: 0; }
-            50% { transform: scale(1.2); }
-            100% { transform: scale(1); opacity: 1; }
-        }
+        body > * { position: relative; z-index: 1; }
 
+        /* ===== ANIMATIONS ===== */
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes scaleIn { from { opacity: 0; transform: scale(0.85); } to { opacity: 1; transform: scale(1); } }
+        @keyframes pulseGlow {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(255, 0, 0, 0.6), var(--shadow-red); }
+            50% { box-shadow: 0 0 0 12px rgba(255, 0, 0, 0), var(--shadow-red); }
+        }
+        @keyframes pulseGold {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(255, 215, 0, 0.6), 0 0 40px rgba(255, 215, 0, 0.5); }
+            50% { box-shadow: 0 0 0 14px rgba(255, 215, 0, 0), 0 0 40px rgba(255, 215, 0, 0.5); }
+        }
+        @keyframes pulseFire {
+            0%, 100% { opacity: 1; transform: scale(1); filter: drop-shadow(0 0 6px var(--primary)); }
+            50% { opacity: 0.75; transform: scale(1.15); filter: drop-shadow(0 0 14px var(--primary)); }
+        }
+        @keyframes pulsePending {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.6; transform: scale(1.1); }
+        }
+        @keyframes slideDown { from { opacity: 0; transform: translateY(-30px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes textGlow {
+            0%, 100% { text-shadow: 0 0 8px rgba(255, 0, 0, 0.8), 0 0 20px rgba(255, 0, 0, 0.4); }
+            50% { text-shadow: 0 0 20px rgba(255, 0, 0, 1), 0 0 40px rgba(255, 0, 0, 0.6); }
+        }
+        @keyframes winPop {
+            0% { transform: translate(-50%, -50%) scale(0.3); opacity: 0; }
+            60% { transform: translate(-50%, -50%) scale(1.15); opacity: 1; }
+            100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+        }
+        @keyframes shimmer { 0% { background-position: -200% 0; } 100% { background-position: 200% 0; } }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        @keyframes bounceIn { 0% { transform: scale(0); } 50% { transform: scale(1.2); } 100% { transform: scale(1); } }
+
+        .hidden { display: none !important; }
+
+        /* ===== BUTTONS ===== */
         .btn {
-            padding: 14px 24px;
+            padding: 15px 24px;
             border: none;
-            border-radius: 16px;
+            border-radius: var(--radius-md);
             font-size: 14px;
-            font-weight: bold;
+            font-weight: 700;
+            letter-spacing: 0.3px;
             cursor: pointer;
-            transition: all 0.3s;
+            transition: all var(--transition);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            position: relative;
+            overflow: hidden;
+            user-select: none;
+            font-family: inherit;
         }
-        .btn-primary {
-            background: linear-gradient(135deg, #ff0000, #cc0000);
-            color: white;
-        }
-        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 5px 20px rgba(255,0,0,0.4); }
-        .btn-secondary {
-            background: #222;
-            color: white;
-        }
-        .btn-secondary:hover { background: #333; transform: translateY(-2px); }
-        .btn-register {
-            background: linear-gradient(135deg, #ff4444, #ff0000);
-            color: white;
-            border: 1px solid #ff6666;
-        }
+        .btn:active:not(:disabled) { transform: scale(0.97); }
+        .btn:disabled { opacity: 0.4; cursor: not-allowed; }
 
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary-light), var(--primary-dark));
+            color: white;
+            box-shadow: 0 4px 16px rgba(255, 0, 0, 0.3);
+        }
+        .btn-primary:hover:not(:disabled) { box-shadow: 0 8px 28px rgba(255, 0, 0, 0.5); transform: translateY(-2px); }
+
+        .btn-secondary {
+            background: var(--bg-elevated);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .btn-secondary:hover:not(:disabled) { background: #1f1f1f; border-color: rgba(255, 0, 0, 0.3); transform: translateY(-2px); }
+
+        .btn-register {
+            background: linear-gradient(135deg, #ff4444, var(--primary));
+            color: white;
+            box-shadow: 0 4px 16px rgba(255, 0, 0, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .btn-register:hover:not(:disabled) { box-shadow: 0 8px 28px rgba(255, 0, 0, 0.6); transform: translateY(-2px); }
+
+        .btn-vip {
+            background: linear-gradient(135deg, var(--gold), #b8860b);
+            color: #000;
+            font-weight: 900;
+            letter-spacing: 0.5px;
+            box-shadow: 0 4px 20px rgba(255, 215, 0, 0.4);
+            border: 1px solid rgba(255, 215, 0, 0.5);
+        }
+        .btn-vip:hover:not(:disabled) { box-shadow: 0 8px 32px rgba(255, 215, 0, 0.6); transform: translateY(-2px); }
+
+        .btn-telegram {
+            background: linear-gradient(135deg, #29b6f6, #0088cc);
+            color: white;
+            box-shadow: 0 4px 16px rgba(0, 136, 204, 0.4);
+            border: 1px solid rgba(41, 182, 246, 0.5);
+        }
+        .btn-telegram:hover:not(:disabled) { box-shadow: 0 8px 28px rgba(0, 136, 204, 0.6); transform: translateY(-2px); }
+
+        /* ===== INSTALL BUTTON ===== */
         .install-btn-container {
             position: fixed;
-            bottom: 75px;
-            right: 15px;
-            left: auto;
-            z-index: 10000;
-            animation: slideUp 0.5s ease;
+            bottom: 90px;
+            right: 16px;
+            z-index: 1000;
+            animation: slideUp 0.4s ease;
         }
+        @media (display-mode: standalone) { .install-btn-container { display: none !important; } }
         .install-btn {
             border: none;
             border-radius: 50px;
-            padding: 10px 16px;
+            padding: 12px 18px;
             font-size: 12px;
-            font-weight: bold;
+            font-weight: 700;
             cursor: pointer;
             display: flex;
             align-items: center;
-            justify-content: center;
-            gap: 6px;
-            animation: pulse 2s infinite;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-        }
-        .install-btn-telegram {
-            background: linear-gradient(135deg, #0088cc, #006699);
+            gap: 8px;
+            animation: pulseGlow 2.5s infinite;
             color: white;
+            font-family: inherit;
         }
-        .install-btn-pwa {
-            background: linear-gradient(135deg, #ff0000, #cc0000);
-            color: white;
-        }
+        .install-btn-telegram { background: linear-gradient(135deg, #0088cc, #006699); }
+        .install-btn-pwa { background: linear-gradient(135deg, var(--primary), var(--primary-dark)); }
 
+        /* ===== LOADING OVERLAY ===== */
         .overlay {
             position: fixed;
             inset: 0;
-            background: rgba(0,0,0,0.95);
+            background: rgba(0, 0, 0, 0.96);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
             display: none;
             justify-content: center;
             align-items: center;
             flex-direction: column;
             z-index: 10000;
         }
-        .overlay.active { display: flex; }
+        .overlay.active { display: flex; animation: fadeIn 0.3s; }
+
+        .loader-ring {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            border: 3px solid rgba(255, 0, 0, 0.15);
+            border-top-color: var(--primary);
+            animation: spin 0.9s linear infinite;
+            margin-bottom: 28px;
+        }
         .overlay-text {
-            font-size: 32px;
-            font-weight: bold;
-            color: #ff0000;
-            animation: pulseText 0.5s infinite;
-            font-family: monospace;
+            font-size: 28px;
+            font-weight: 800;
+            color: var(--primary);
+            letter-spacing: 4px;
+            animation: textGlow 0.8s infinite;
+            font-family: 'SF Mono', 'Monaco', monospace;
         }
         .overlay-sub {
-            font-size: 14px;
+            font-size: 13px;
             color: #ff6666;
-            margin-top: 20px;
-            font-family: monospace;
+            margin-top: 14px;
+            letter-spacing: 1px;
+            font-family: 'SF Mono', 'Monaco', monospace;
+            opacity: 0.8;
+        }
+        .overlay-progress {
+            width: 200px;
+            height: 3px;
+            background: rgba(255, 0, 0, 0.15);
+            border-radius: 3px;
+            margin-top: 24px;
+            overflow: hidden;
+        }
+        .overlay-progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), #ff6666, var(--primary));
+            background-size: 200% 100%;
+            animation: shimmer 1.5s infinite;
+            border-radius: 3px;
+            transition: width 0.4s ease;
         }
 
+        /* ===== LANGUAGE SELECTOR ===== */
         #languageSelector {
             position: fixed;
             inset: 0;
-            background: #000;
+            background: var(--bg);
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             z-index: 5000;
+            padding: 24px;
+            animation: fadeIn 0.4s;
+        }
+        #languageSelector.hide { display: none !important; }
+        #languageSelector::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at 50% 30%, rgba(255, 0, 0, 0.2) 0%, transparent 60%);
+            pointer-events: none;
+        }
+        .lang-logo {
+            width: 90px;
+            height: 90px;
+            border-radius: 26px;
+            background: linear-gradient(135deg, var(--primary), #990000);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 24px;
+            box-shadow: var(--shadow-red);
+            animation: bounceIn 0.6s ease;
+            position: relative;
+            z-index: 1;
+        }
+        .lang-logo i { font-size: 44px; color: white; }
+        .lang-title {
+            font-size: 28px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #fff, var(--primary-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 8px;
+            letter-spacing: -0.5px;
+        }
+        .lang-subtitle {
+            color: var(--text-muted);
+            font-size: 13px;
+            margin-bottom: 40px;
+            letter-spacing: 0.5px;
         }
         .lang-btn {
-            width: 220px;
-            padding: 16px;
-            margin: 10px;
-            background: #111;
-            border: 2px solid #ff0000;
-            border-radius: 16px;
+            width: 100%;
+            max-width: 300px;
+            padding: 18px 24px;
+            margin: 6px 0;
+            background: var(--bg-elevated);
+            border: 1.5px solid rgba(255, 0, 0, 0.25);
+            border-radius: var(--radius-md);
             color: white;
-            font-size: 18px;
+            font-size: 16px;
+            font-weight: 600;
             cursor: pointer;
+            transition: all var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            font-family: inherit;
+            position: relative;
+            z-index: 1;
         }
-        .lang-btn:hover { transform: translateY(-2px); box-shadow: 0 5px 20px rgba(255,0,0,0.3); }
+        .lang-btn:hover, .lang-btn:active {
+            background: rgba(255, 0, 0, 0.12);
+            border-color: var(--primary);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(255, 0, 0, 0.25);
+        }
+        .lang-flag { font-size: 24px; }
+        .lang-arrow { margin-left: auto; color: var(--text-muted); transition: transform var(--transition); }
+        .lang-btn:hover .lang-arrow { transform: translateX(4px); color: var(--primary); }
 
-        .main-container, .page-container { display: none; }
-        .main-container.active, .page-container.active { display: block; animation: fadeInUp 0.5s; }
-
+        /* ===== HEADER ===== */
         .app-header {
-            background: rgba(0,0,0,0.95);
-            padding: 15px 20px;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            padding: 14px 18px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-bottom: 2px solid #ff0000;
+            border-bottom: 1px solid var(--border);
             position: sticky;
             top: 0;
             z-index: 100;
         }
-        .logo { display: flex; align-items: center; gap: 10px; }
+        .logo { display: flex; align-items: center; gap: 12px; }
         .logo-icon {
-            width: 45px; height: 45px;
-            background: linear-gradient(135deg, #ff0000, #990000);
-            border-radius: 14px;
+            width: 42px;
+            height: 42px;
+            background: linear-gradient(135deg, var(--primary), #990000);
+            border-radius: 13px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 12px rgba(255, 0, 0, 0.3);
+            cursor: pointer;
+            transition: transform var(--transition);
+        }
+        .logo-icon:active { transform: scale(0.92); }
+        .logo-icon i { font-size: 20px; color: white; }
+        .logo-text {
+            font-size: 16px;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+            background: linear-gradient(135deg, #fff, #ff6666);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .header-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            background: var(--bg-elevated);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all var(--transition);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .header-icon:active { transform: scale(0.92); background: rgba(255, 0, 0, 0.15); }
+        .header-icon i { color: #ccc; font-size: 16px; }
+
+        /* ===== PAGES ===== */
+        .main-container, .page-container { display: none; animation: fadeInUp 0.4s ease; }
+        .main-container.active, .page-container.active { display: block; }
+
+        /* ===== CARDS ===== */
+        .card {
+            margin: 16px;
+            padding: 22px;
+            background: linear-gradient(145deg, var(--bg-card), #050505);
+            border-radius: var(--radius-xl);
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow-dark);
+            position: relative;
+            overflow: hidden;
+        }
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255, 0, 0, 0.5), transparent);
+        }
+        .card-title {
+            font-size: 17px;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            letter-spacing: 0.3px;
+            margin-bottom: 8px;
+        }
+        .card-title i { color: var(--primary); }
+        .card-subtitle { color: var(--text-muted); font-size: 13px; line-height: 1.5; margin-bottom: 4px; }
+
+        .hero-card {
+            background:
+                radial-gradient(circle at 100% 0%, rgba(255, 0, 0, 0.25) 0%, transparent 50%),
+                linear-gradient(145deg, #120000, #050505);
+            border: 1px solid rgba(255, 0, 0, 0.25);
+        }
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 12px;
+            background: rgba(255, 0, 0, 0.15);
+            border: 1px solid rgba(255, 0, 0, 0.3);
+            border-radius: 100px;
+            font-size: 11px;
+            font-weight: 700;
+            color: #ff6666;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 14px;
+        }
+        .hero-badge .dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--primary);
+            box-shadow: 0 0 8px var(--primary);
+            animation: pulseGlow 1.5s infinite;
+        }
+        .hero-title {
+            font-size: 26px;
+            font-weight: 900;
+            line-height: 1.15;
+            letter-spacing: -0.5px;
+            margin-bottom: 10px;
+        }
+        .hero-title span {
+            background: linear-gradient(135deg, var(--primary-light), var(--primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .hero-desc { color: var(--text-muted); font-size: 13.5px; line-height: 1.6; margin-bottom: 20px; }
+
+        /* ===== STATS ===== */
+        .stats-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+        .stat-item {
+            background: linear-gradient(145deg, var(--bg-elevated), #0a0a0a);
+            padding: 18px 14px;
+            border-radius: var(--radius-md);
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            transition: all var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+        .stat-item:active { transform: scale(0.97); }
+        .stat-item::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 40%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--primary), transparent);
+            opacity: 0.6;
+        }
+        .stat-value {
+            font-size: 24px;
+            font-weight: 900;
+            color: var(--primary-light);
+            letter-spacing: -0.5px;
+            line-height: 1;
+            margin-bottom: 6px;
+        }
+        .stat-label {
+            font-size: 10.5px;
+            color: var(--text-muted);
+            letter-spacing: 1.5px;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        /* ===== OFFERS GRID ===== */
+        .offers-card {
+            background:
+                radial-gradient(circle at 0% 100%, rgba(255, 170, 0, 0.15) 0%, transparent 50%),
+                linear-gradient(145deg, var(--bg-card), #050505);
+            border: 1px solid rgba(255, 170, 0, 0.2);
+        }
+        .offers-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+        }
+        .offer-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            padding: 12px;
+            background: linear-gradient(145deg, var(--bg-elevated), #0a0a0a);
+            border-radius: var(--radius-md);
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            transition: all var(--transition);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+        .offer-item:hover, .offer-item:active {
+            transform: translateY(-2px);
+            border-color: rgba(255, 170, 0, 0.4);
+            box-shadow: 0 8px 20px rgba(255, 170, 0, 0.15);
+        }
+        .offer-icon {
+            width: 36px;
+            height: 36px;
+            min-width: 36px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            background: rgba(255, 170, 0, 0.15);
+            color: var(--warning);
+        }
+        .offer-text {
+            font-size: 11.5px;
+            line-height: 1.35;
+            color: #ccc;
+            font-weight: 600;
+        }
+        .offer-text b {
+            color: #fff;
+            font-weight: 700;
+            display: block;
+            margin-bottom: 2px;
+            font-size: 12.5px;
+        }
+
+        /* ===== VIP CARD ===== */
+        .vip-card {
+            background:
+                radial-gradient(circle at 50% 0%, rgba(255, 215, 0, 0.25) 0%, transparent 60%),
+                linear-gradient(145deg, #1a1400, #050505);
+            border: 1.5px solid rgba(255, 215, 0, 0.3);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .vip-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--gold), transparent);
+            animation: shimmer 3s linear infinite;
+            background-size: 200% 100%;
+        }
+        .vip-crown {
+            width: 70px;
+            height: 70px;
+            margin: 0 auto 14px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--gold), #b8860b);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: pulseGold 2s infinite;
+        }
+        .vip-crown i {
+            font-size: 32px;
+            color: #fff;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+        }
+        .vip-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            background: linear-gradient(135deg, var(--gold), #b8860b);
+            color: #000;
+            font-size: 10px;
+            font-weight: 900;
+            letter-spacing: 2px;
+            border-radius: 100px;
+            margin-bottom: 10px;
+        }
+        .vip-title {
+            font-size: 22px;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--gold), var(--warning));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 8px;
+            letter-spacing: -0.3px;
+        }
+        .vip-desc {
+            font-size: 12.5px;
+            color: #bbb;
+            line-height: 1.6;
+            margin-bottom: 16px;
+        }
+        .vip-desc b { color: var(--gold); }
+        .vip-features {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 18px;
+        }
+        .vip-feature {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 11px;
+            color: var(--gold);
+            background: rgba(255, 215, 0, 0.1);
+            padding: 5px 10px;
+            border-radius: 100px;
+            border: 1px solid rgba(255, 215, 0, 0.2);
+            font-weight: 600;
+        }
+        .vip-feature i { font-size: 10px; }
+
+        /* ===== INVITE CARD ===== */
+        .invite-card {
+            background:
+                radial-gradient(circle at 100% 100%, rgba(0, 200, 83, 0.15) 0%, transparent 50%),
+                linear-gradient(145deg, var(--bg-card), #050505);
+            border: 1px solid rgba(0, 200, 83, 0.2);
+        }
+        .invite-stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin-bottom: 16px;
+        }
+        .invite-stat {
+            padding: 14px;
+            background: linear-gradient(145deg, var(--bg-elevated), #0a0a0a);
+            border-radius: var(--radius-md);
+            border: 1px solid rgba(0, 200, 83, 0.15);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .invite-stat::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 40%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--success), transparent);
+        }
+        .invite-stat-value {
+            font-size: 22px;
+            font-weight: 900;
+            color: var(--primary-light);
+            letter-spacing: -0.5px;
+            margin-bottom: 4px;
+        }
+        .invite-stat-label {
+            font-size: 10px;
+            color: var(--text-muted);
+            letter-spacing: 1.2px;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+        .invite-link-box {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+        .invite-link-input {
+            flex: 1;
+            padding: 14px 14px;
+            background: var(--bg-input);
+            border: 1.5px solid rgba(0, 200, 83, 0.3);
+            border-radius: var(--radius-md);
+            color: var(--success);
+            font-size: 11px;
+            font-weight: 600;
+            font-family: 'SF Mono', 'Monaco', monospace;
+            outline: none;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+        .invite-copy-btn {
+            width: 50px;
+            background: linear-gradient(135deg, var(--success), #009624);
+            border: none;
+            border-radius: var(--radius-md);
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all var(--transition);
             display: flex;
             align-items: center;
             justify-content: center;
         }
-        .logo-text { font-size: 18px; font-weight: bold; color: #ff3333; }
-
-        .card {
-            margin: 20px;
-            padding: 20px;
-            background: #111;
-            border-radius: 20px;
-            border: 2px solid rgba(255,0,0,0.2);
+        .invite-copy-btn:active {
+            transform: scale(0.94);
+            box-shadow: 0 0 20px rgba(0, 200, 83, 0.5);
         }
-        .stats-grid {
+        .invite-share-row {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 12px;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
         }
-        .stat-item {
-            background: #181818;
-            padding: 16px;
-            border-radius: 16px;
-            text-align: center;
+        .invite-share-btn {
+            padding: 12px 8px;
+            font-size: 11.5px;
+            font-weight: 700;
+            flex-direction: column;
+            gap: 4px;
+            min-height: 60px;
         }
-        .stat-value { font-size: 22px; font-weight: bold; color: #ff3333; }
-        .stat-label { font-size: 11px; color: #888; }
+        .invite-share-btn i { font-size: 18px; }
 
+        /* ===== PENDING BANNER ===== */
+        .pending-banner {
+            display: none;
+            align-items: center;
+            gap: 12px;
+            padding: 14px 16px;
+            background: linear-gradient(135deg, rgba(255, 170, 0, 0.15), rgba(255, 170, 0, 0.05));
+            border: 1px solid rgba(255, 170, 0, 0.35);
+            border-radius: var(--radius-md);
+            margin-bottom: 12px;
+            animation: fadeInUp 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .pending-banner.show { display: flex; }
+        .pending-banner::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 3px;
+            height: 100%;
+            background: linear-gradient(180deg, var(--warning), transparent);
+        }
+        .pending-banner-icon {
+            width: 42px;
+            height: 42px;
+            min-width: 42px;
+            border-radius: 50%;
+            background: rgba(255, 170, 0, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--warning);
+            font-size: 18px;
+            animation: pulsePending 1.8s infinite;
+        }
+        .pending-banner-content {
+            flex: 1;
+        }
+        .pending-banner-title {
+            font-size: 13px;
+            font-weight: 800;
+            color: var(--warning);
+            margin-bottom: 3px;
+            letter-spacing: 0.3px;
+        }
+        .pending-banner-desc {
+            font-size: 11px;
+            color: #c9a652;
+            line-height: 1.4;
+        }
+        .pending-banner-spinner {
+            width: 20px;
+            height: 20px;
+            min-width: 20px;
+            border-radius: 50%;
+            border: 2px solid rgba(255, 170, 0, 0.25);
+            border-top-color: var(--warning);
+            animation: spin 1s linear infinite;
+        }
+
+        /* ===== BOTTOM NAV ===== */
         .bottom-nav {
             position: fixed;
             bottom: 0;
             left: 0;
             width: 100%;
-            background: #111;
-            border-top: 2px solid #ff0000;
+            background: rgba(10, 10, 10, 0.92);
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            border-top: 1px solid var(--border);
             display: flex;
             justify-content: space-around;
-            padding: 8px 0;
+            padding: 8px 0 max(8px, env(safe-area-inset-bottom));
             z-index: 200;
         }
         .nav-item {
             flex: 1;
             text-align: center;
-            color: #777;
+            color: var(--text-dim);
             cursor: pointer;
-            font-size: 12px;
+            font-size: 10.5px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            padding: 6px 4px;
+            transition: all var(--transition);
+            position: relative;
+            user-select: none;
         }
-        .nav-item.active { color: #ff0000; }
-        .nav-item i { font-size: 20px; margin-bottom: 3px; display: block; }
+        .nav-item i { font-size: 19px; margin-bottom: 4px; display: block; transition: transform var(--transition); }
+        .nav-item.active { color: var(--primary); }
+        .nav-item.active i { transform: translateY(-2px); }
+        .nav-item.active::before {
+            content: '';
+            position: absolute;
+            top: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 24px;
+            height: 3px;
+            background: var(--primary);
+            border-radius: 0 0 4px 4px;
+            box-shadow: 0 0 12px var(--primary);
+        }
+        .nav-item:active { transform: scale(0.94); }
 
+        /* ===== MODAL ===== */
         .modal-overlay {
             position: fixed;
             inset: 0;
-            background: rgba(0,0,0,0.95);
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
             display: none;
             justify-content: center;
-            align-items: center;
+            align-items: flex-end;
             z-index: 1000;
-            padding: 20px;
+            padding: 0;
         }
+        .modal-overlay.active { display: flex; animation: fadeIn 0.25s; }
         .modal-content {
-            background: #111;
-            border: 2px solid #ff0000;
-            border-radius: 24px;
-            max-width: 400px;
+            background: linear-gradient(180deg, #141414, #0a0a0a);
+            border: 1px solid var(--border);
+            border-bottom: none;
+            border-radius: 28px 28px 0 0;
             width: 100%;
-            padding: 20px;
+            max-width: 480px;
+            padding: 12px 20px 32px;
+            animation: slideUp 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
+            max-height: 92dvh;
+            overflow-y: auto;
         }
+        .modal-handle {
+            width: 40px;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 4px;
+            margin: 0 auto 20px;
+        }
+        .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+        .modal-title { font-size: 18px; font-weight: 800; color: var(--text); display: flex; align-items: center; gap: 10px; }
+        .modal-title i { color: var(--primary); }
+        .modal-close {
+            width: 36px;
+            height: 36px;
+            background: rgba(255, 255, 255, 0.06);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all var(--transition);
+            border: none;
+            color: white;
+        }
+        .modal-close:active { transform: scale(0.9); background: rgba(255, 0, 0, 0.2); }
+
+        /* ===== ID NOTICE ===== */
+        .id-notice {
+            background: linear-gradient(145deg, rgba(255, 0, 0, 0.08), rgba(255, 0, 0, 0.03));
+            border: 1px solid rgba(255, 0, 0, 0.25);
+            border-radius: var(--radius-md);
+            padding: 14px 16px;
+            margin-bottom: 18px;
+            position: relative;
+            overflow: hidden;
+            animation: fadeInUp 0.4s ease;
+        }
+        .id-notice::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 3px;
+            height: 100%;
+            background: linear-gradient(180deg, var(--primary), transparent);
+        }
+        .id-notice-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 12px;
+            font-weight: 800;
+            letter-spacing: 1.5px;
+            color: #ff6666;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+            padding-bottom: 10px;
+            border-bottom: 1px dashed rgba(255, 0, 0, 0.2);
+        }
+        .id-notice-header i {
+            color: var(--warning);
+            font-size: 14px;
+            animation: pulseFire 2s infinite;
+        }
+        .id-notice-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 9px;
+        }
+        .id-notice-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            font-size: 12.5px;
+            line-height: 1.5;
+            color: #bbb;
+        }
+        .id-notice-list li i {
+            color: var(--success);
+            font-size: 13px;
+            margin-top: 3px;
+            flex-shrink: 0;
+        }
+        .id-notice-list li i.fa-fire {
+            color: var(--primary);
+            animation: pulseFire 1.5s infinite;
+        }
+        .id-notice-list li b { color: #fff; font-weight: 700; }
+        .id-notice-list li.danger {
+            background: rgba(255, 0, 0, 0.08);
+            border-left: 2px solid var(--primary);
+            padding: 6px 8px;
+            margin: 2px -8px 0;
+            border-radius: 4px;
+        }
+        .id-notice-list li.danger span { color: #ff6666; }
+
+        .id-label {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-bottom: 12px;
+            font-weight: 600;
+            letter-spacing: 0.3px;
+        }
+        .id-label i { color: var(--primary); }
+
+        /* ===== ID INPUT ===== */
         .id-input {
             width: 100%;
-            padding: 15px;
-            background: #222;
-            border: 2px solid #ff0000;
-            border-radius: 12px;
+            padding: 18px;
+            background: var(--bg-input);
+            border: 1.5px solid rgba(255, 0, 0, 0.3);
+            border-radius: var(--radius-md);
             color: white;
             text-align: center;
-            font-size: 16px;
-            margin-bottom: 15px;
+            font-size: 18px;
+            font-weight: 700;
+            letter-spacing: 3px;
+            margin-bottom: 16px;
+            transition: all var(--transition);
+            font-family: 'SF Mono', 'Monaco', monospace;
+            outline: none;
         }
-        
+        .id-input:focus { border-color: var(--primary); box-shadow: 0 0 0 4px rgba(255, 0, 0, 0.15); }
+        .id-input::placeholder { color: var(--text-dim); letter-spacing: 2px; font-weight: 500; }
+
+        /* ===== GAME ===== */
+        .game-info {
+            text-align: center;
+            margin: 16px 0;
+            padding: 14px 16px;
+            background: rgba(255, 0, 0, 0.1);
+            border: 1px solid rgba(255, 0, 0, 0.2);
+            border-radius: var(--radius-md);
+            font-size: 13px;
+            color: #ff9999;
+            line-height: 1.5;
+            font-weight: 600;
+        }
+        .game-progress { display: flex; justify-content: center; gap: 6px; margin-bottom: 16px; }
+        .progress-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: rgba(255, 0, 0, 0.2);
+            transition: all var(--transition);
+        }
+        .progress-dot.active { background: var(--primary); box-shadow: 0 0 10px var(--primary); transform: scale(1.3); }
+        .progress-dot.done { background: var(--success); box-shadow: 0 0 8px var(--success); }
+
         .game-apples-container {
             display: flex;
             justify-content: center;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
             margin: 20px 0;
+            padding: 8px 4px;
             overflow-x: auto;
-            padding: 5px;
             scrollbar-width: none;
         }
         .game-apples-container::-webkit-scrollbar { display: none; }
+
         .game-apple {
-            width: 60px;
-            height: 60px;
-            min-width: 60px;
+            width: 62px;
+            height: 62px;
+            min-width: 62px;
             border-radius: 50%;
             background-size: cover;
             background-position: center;
             cursor: pointer;
-            border: 2px solid #ff0000;
-            transition: all 0.3s;
+            border: 2px solid rgba(255, 0, 0, 0.4);
+            transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+            position: relative;
         }
-        .game-apple:hover { transform: scale(1.05); }
-        .apple-mystery { background-image: url('https://i.ibb.co/Gf3NcMDQ/maxresdefault.jpg'); }
-        .apple-whole { background-image: url('https://i.pinimg.com/736x/6a/aa/19/6aaa196961f40afd21cf9d21824f137e.jpg'); border-color: #00ff00; }
-        .apple-bitten { background-image: url('https://i.ibb.co/m5sNvNPK/62cd09ea-de08-49b9-9fea-d0100c747423-2.jpg'); border-color: #ff4444; }
+        .game-apple::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 50%;
+            background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.2), transparent 60%);
+            pointer-events: none;
+        }
+        .apple-mystery { background-image: url('https://i.ibb.co/Gf3NcMDQ/maxresdefault.jpg'); animation: pulseGlow 2.5s infinite; }
+        .apple-whole {
+            background-image: url('https://i.pinimg.com/736x/6a/aa/19/6aaa196961f40afd21cf9d21824f137e.jpg');
+            border-color: var(--success);
+            box-shadow: 0 0 24px rgba(0, 200, 83, 0.6);
+            transform: scale(1.08);
+        }
+        .apple-bitten {
+            background-image: url('https://i.ibb.co/m5sNvNPK/62cd09ea-de08-49b9-9fea-d0100c747423-2.jpg');
+            border-color: var(--danger);
+            box-shadow: 0 0 16px rgba(255, 23, 68, 0.4);
+            opacity: 0.85;
+        }
+        .apple-reveal { animation: bounceIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1); }
 
-        .game-info {
+        /* ===== WIN/LOSE POPUPS ===== */
+        .result-popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border-radius: 28px;
+            padding: 28px 44px;
             text-align: center;
-            margin: 15px 0;
-            padding: 12px;
-            background: rgba(255,0,0,0.15);
-            border-radius: 12px;
-            font-size: 13px;
+            z-index: 10001;
+            display: none;
+            min-width: 240px;
+            backdrop-filter: blur(20px);
         }
-        
-        /* Win Message */
+        .result-popup.active { display: block; animation: winPop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1); }
         .win-message {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: linear-gradient(135deg, #00aa00, #006600);
-            border: 2px solid #00ff00;
-            border-radius: 30px;
-            padding: 20px 40px;
-            text-align: center;
-            z-index: 10001;
-            animation: winAnim 0.5s ease;
-            box-shadow: 0 0 50px rgba(0,255,0,0.5);
-            display: none;
+            background: linear-gradient(135deg, rgba(0, 170, 0, 0.95), rgba(0, 102, 0, 0.95));
+            border: 2px solid rgba(0, 255, 0, 0.6);
+            box-shadow: 0 0 60px rgba(0, 255, 0, 0.5), inset 0 0 40px rgba(0, 255, 0, 0.1);
         }
-        .win-message h2 {
-            font-size: 28px;
-            color: #fff;
-            margin-bottom: 10px;
-        }
-        .win-message p {
-            font-size: 16px;
-            color: #ffff00;
-        }
-        
         .lose-message {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: linear-gradient(135deg, #cc0000, #990000);
-            border: 2px solid #ff0000;
-            border-radius: 30px;
-            padding: 20px 40px;
-            text-align: center;
-            z-index: 10001;
-            animation: winAnim 0.5s ease;
-            box-shadow: 0 0 50px rgba(255,0,0,0.5);
-            display: none;
+            background: linear-gradient(135deg, rgba(204, 0, 0, 0.95), rgba(120, 0, 0, 0.95));
+            border: 2px solid rgba(255, 0, 0, 0.6);
+            box-shadow: 0 0 60px rgba(255, 0, 0, 0.5), inset 0 0 40px rgba(255, 0, 0, 0.1);
         }
-        .lose-message h2 {
-            font-size: 28px;
-            color: #fff;
-            margin-bottom: 10px;
+        .result-icon { font-size: 48px; margin-bottom: 12px; display: block; animation: bounceIn 0.6s 0.1s both; }
+        .result-title {
+            font-size: 26px;
+            font-weight: 900;
+            letter-spacing: 1px;
+            margin-bottom: 6px;
+            color: white;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
         }
+        .result-sub { font-size: 14px; color: rgba(255, 255, 255, 0.9); font-weight: 600; }
 
+        /* ===== TOAST ===== */
         .toast {
             position: fixed;
-            top: 70px;
-            left: 20px;
-            right: 20px;
-            padding: 14px;
-            border-radius: 16px;
+            top: 80px;
+            left: 16px;
+            right: 16px;
+            padding: 14px 18px;
+            border-radius: var(--radius-md);
             text-align: center;
-            font-weight: bold;
+            font-weight: 700;
+            font-size: 13.5px;
             z-index: 9999;
-            animation: slideDown 0.3s;
+            animation: slideDown 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(20px);
+            max-width: 420px;
+            margin: 0 auto;
         }
-        @keyframes slideDown {
-            from { transform: translateY(-50px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
-        }
-        .toast.success { background: linear-gradient(135deg, #00aa00, #006600); }
-        .toast.error { background: linear-gradient(135deg, #cc0000, #990000); }
-        .toast.info { background: linear-gradient(135deg, #0066cc, #004499); }
+        .toast.success { background: linear-gradient(135deg, rgba(0, 170, 0, 0.95), rgba(0, 102, 0, 0.95)); border: 1px solid rgba(0, 255, 0, 0.3); }
+        .toast.error { background: linear-gradient(135deg, rgba(204, 0, 0, 0.95), rgba(120, 0, 0, 0.95)); border: 1px solid rgba(255, 0, 0, 0.3); }
+        .toast.info { background: linear-gradient(135deg, rgba(0, 136, 204, 0.95), rgba(0, 102, 153, 0.95)); border: 1px solid rgba(41, 182, 246, 0.3); }
+        .toast.warning { background: linear-gradient(135deg, rgba(255, 170, 0, 0.95), rgba(200, 130, 0, 0.95)); border: 1px solid rgba(255, 200, 0, 0.3); }
 
-        @media (max-width: 450px) {
-            .game-apple { width: 55px; height: 55px; min-width: 55px; }
-            .game-apples-container { gap: 6px; }
+        /* ===== SETTINGS ===== */
+        .settings-list { display: flex; flex-direction: column; gap: 10px; }
+        .settings-btn {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 16px 18px;
+            background: var(--bg-elevated);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: var(--radius-md);
+            color: white;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all var(--transition);
+            width: 100%;
+            text-align: left;
+            font-family: inherit;
+        }
+        .settings-btn:hover, .settings-btn:active {
+            background: rgba(255, 0, 0, 0.1);
+            border-color: rgba(255, 0, 0, 0.3);
+            transform: translateY(-1px);
+        }
+        .settings-btn i:first-child {
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 0, 0, 0.15);
+            color: var(--primary);
+            font-size: 16px;
+        }
+        .settings-btn .chevron { margin-left: auto; color: var(--text-dim); font-size: 14px; }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 380px) {
+            .game-apple { width: 54px; height: 54px; min-width: 54px; }
+            .game-apples-container { gap: 7px; }
+            .hero-title { font-size: 22px; }
+            .stat-value { font-size: 20px; }
+            .result-popup { padding: 24px 32px; }
+            .result-title { font-size: 22px; }
+            .id-notice-list li { font-size: 11.5px; }
+            .offer-text { font-size: 11px; }
+            .offer-text b { font-size: 11.5px; }
+            .vip-title { font-size: 19px; }
+            .invite-share-btn { font-size: 10.5px; padding: 10px 6px; }
+            .pending-banner-title { font-size: 12px; }
+            .pending-banner-desc { font-size: 10.5px; }
+        }
+
+        @media (min-width: 500px) {
+            .modal-overlay { align-items: center; padding: 20px; }
+            .modal-content { border-radius: 28px; border-bottom: 1px solid var(--border); }
+            .modal-handle { display: none; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                transition-duration: 0.01ms !important;
+            }
         }
     </style>
 </head>
 <body>
 
+<!-- ===== LANGUAGE SELECTOR ===== -->
 <div id="languageSelector">
-    <div class="logo-icon" style="margin-bottom:20px"><i class="fas fa-apple-alt" style="font-size:36px"></i></div>
-    <h2 style="color:#ff0000;margin-bottom:20px">Apple of Fortune</h2>
-    <button class="lang-btn" onclick="selectLang('uz')">🇺🇿 O'zbekcha</button>
-    <button class="lang-btn" onclick="selectLang('ru')">🇷🇺 Русский</button>
-    <button class="lang-btn" onclick="selectLang('en')">🇺🇸 English</button>
+    <div class="lang-logo">
+        <i class="fas fa-apple-alt"></i>
+    </div>
+    <h1 class="lang-title">Apple of Fortune</h1>
+    <p class="lang-subtitle">PREMIUM SIGNALS</p>
+    <button class="lang-btn" onclick="selectLang('uz')">
+        <span class="lang-flag">🇺🇿</span>
+        <span>O'zbekcha</span>
+        <i class="fas fa-chevron-right lang-arrow"></i>
+    </button>
+    <button class="lang-btn" onclick="selectLang('ru')">
+        <span class="lang-flag">🇷🇺</span>
+        <span>Русский</span>
+        <i class="fas fa-chevron-right lang-arrow"></i>
+    </button>
+    <button class="lang-btn" onclick="selectLang('en')">
+        <span class="lang-flag">🇺🇸</span>
+        <span>English</span>
+        <i class="fas fa-chevron-right lang-arrow"></i>
+    </button>
 </div>
 
+<!-- ===== LOADING OVERLAY ===== -->
 <div class="overlay" id="loadingOverlay">
+    <div class="loader-ring"></div>
     <div class="overlay-text" id="overlayText">HACKING</div>
     <div class="overlay-sub" id="overlaySub">Tizimga kirish...</div>
+    <div class="overlay-progress">
+        <div class="overlay-progress-bar" id="overlayProgress" style="width:0%"></div>
+    </div>
 </div>
 
+<!-- ===== INSTALL BUTTON ===== -->
 <div id="installBtnContainer" class="install-btn-container"></div>
 
-<!-- Win/Loss Popup -->
-<div id="winPopup" class="win-message">
-    <h2>🎉 GALABA!</h2>
-    <p>Siz yutdingiz!</p>
+<!-- ===== RESULT POPUPS ===== -->
+<div id="winPopup" class="result-popup win-message">
+    <span class="result-icon">🎉</span>
+    <div class="result-title">GALABA!</div>
+    <div class="result-sub">Siz yutdingiz!</div>
 </div>
-<div id="losePopup" class="lose-message">
-    <h2>😔 YUTQIZIQ</h2>
-    <p>Keyingi safar omad!</p>
+<div id="losePopup" class="result-popup lose-message">
+    <span class="result-icon">😔</span>
+    <div class="result-title">YUTQIZIQ</div>
+    <div class="result-sub">Keyingi safar omad!</div>
 </div>
 
-<div class="main-container active" id="mainContainer">
+<!-- ===== MAIN CONTAINER ===== -->
+<div class="main-container" id="mainContainer">
     <header class="app-header">
-        <div class="logo"><div class="logo-icon"><i class="fas fa-apple-alt"></i></div><div class="logo-text">APPLE PREMIUM</div></div>
-        <div style="cursor:pointer" onclick="showPage('settingsPage')"><i class="fas fa-cog"></i></div>
+        <div class="logo">
+            <div class="logo-icon"><i class="fas fa-apple-alt"></i></div>
+            <div class="logo-text">APPLE PREMIUM</div>
+        </div>
+        <div class="header-icon" onclick="showPage('settingsPage')">
+            <i class="fas fa-cog"></i>
+        </div>
     </header>
 
-    <div class="card">
-        <h3>🔥 PREMIUM SIGNALS</h3>
-        <p style="margin-top:10px;color:#aaa">Yuqori aniqlikdagi premium signallar</p>
-        <button class="btn btn-register" style="width:100%;margin-top:15px" onclick="registerUser()">📝 RO'YXATDAN O'TISH</button>
-        <button class="btn btn-primary" style="width:100%;margin-top:10px" onclick="openGame()">⚡ SIGNAL OLISH</button>
-        <button class="btn btn-secondary" style="width:100%;margin-top:10px" onclick="joinTelegram()">📢 TELEGRAM</button>
+    <!-- ===== HERO CARD ===== -->
+    <div class="card hero-card">
+        <div class="hero-badge">
+            <span class="dot"></span>
+            <span>LIVE SIGNALS</span>
+        </div>
+        <h2 class="hero-title">Premium <span>Signals</span><br>Yuqori aniqlikda</h2>
+        <p class="hero-desc">Har kuni 98% aniqlik bilan premium signallar oling va daromadingizni oshiring.</p>
+        <button class="btn btn-register" style="width:100%;margin-bottom:10px" onclick="registerUser()">
+            <i class="fas fa-user-plus"></i> RO'YXATDAN O'TISH
+        </button>
+        <button class="btn btn-primary" style="width:100%;margin-bottom:10px" onclick="openGame()">
+            <i class="fas fa-bolt"></i> SIGNAL OLISH
+        </button>
+        <button class="btn btn-secondary" style="width:100%" onclick="joinTelegram()">
+            <i class="fab fa-telegram"></i> TELEGRAM KANAL
+        </button>
     </div>
 
+    <!-- ===== STATISTIKA ===== -->
     <div class="card">
+        <div class="card-title"><i class="fas fa-chart-line"></i> Statistika</div>
+        <p class="card-subtitle" style="margin-bottom:16px">Real vaqtdagi ko'rsatkichlar</p>
         <div class="stats-grid">
-            <div class="stat-item"><div class="stat-value" id="onlineCount">2580</div><div class="stat-label">ONLINE</div></div>
-            <div class="stat-item"><div class="stat-value">98%</div><div class="stat-label">ANIQLIK</div></div>
-            <div class="stat-item"><div class="stat-value" id="incomeCount">$445</div><div class="stat-label">DAROMAD</div></div>
-            <div class="stat-item"><div class="stat-value" id="levelDisplay">0</div><div class="stat-label">BOSQICH</div></div>
+            <div class="stat-item">
+                <div class="stat-value" id="onlineCount">2580</div>
+                <div class="stat-label">Online</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value">98%</div>
+                <div class="stat-label">Aniqlik</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value" id="incomeCount">$445</div>
+                <div class="stat-label">Daromad</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value" id="levelDisplay">0</div>
+                <div class="stat-label">Bosqich</div>
+            </div>
         </div>
     </div>
 
+    <!-- ===== 10 TA TAKLIFLAR ===== -->
+    <div class="card offers-card">
+        <div class="card-title"><i class="fas fa-gift"></i> Sizni Kutayotgan Takliflar</div>
+        <p class="card-subtitle" style="margin-bottom:16px">10 ta maxsus imkoniyat — foydalaning!</p>
+        <div class="offers-grid" id="offersGrid"></div>
+    </div>
+
+    <!-- ===== VIP SIGNAL ===== -->
+    <div class="card vip-card">
+        <div class="vip-crown"><i class="fas fa-crown"></i></div>
+        <div class="vip-badge">EXCLUSIVE</div>
+        <h3 class="vip-title">VIP Signal Oling</h3>
+        <p class="vip-desc">
+            VIP a'zolar uchun <b>99.9% aniqlikdagi</b> maxsus signallar.
+            Har kuni cheklangan miqdorda tarqatiladi.
+        </p>
+        <div class="vip-features">
+            <div class="vip-feature">
+                <i class="fas fa-check-circle"></i>
+                <span>99.9% aniqlik</span>
+            </div>
+            <div class="vip-feature">
+                <i class="fas fa-check-circle"></i>
+                <span>Shaxsiy signal</span>
+            </div>
+            <div class="vip-feature">
+                <i class="fas fa-check-circle"></i>
+                <span>24/7 yordam</span>
+            </div>
+        </div>
+        <button class="btn btn-vip" style="width:100%" onclick="getVipSignal()">
+            <i class="fas fa-crown"></i> VIP SIGNAL OLISH
+        </button>
+    </div>
+
+    <!-- ===== DO'STLARNI TAKLIF QILISH ===== -->
+    <div class="card invite-card">
+        <div class="card-title"><i class="fas fa-user-friends"></i> Do'stlarni Taklif Qiling</div>
+        <p class="card-subtitle" style="margin-bottom:16px">
+            Har bir taklif qilingan do'st uchun <b style="color:#00c853">$5 bonus</b> oling!
+        </p>
+
+        <!-- STATISTIKA -->
+        <div class="invite-stats">
+            <div class="invite-stat">
+                <div class="invite-stat-value" id="inviteCount">0</div>
+                <div class="invite-stat-label">Taklif qilingan</div>
+            </div>
+            <div class="invite-stat">
+                <div class="invite-stat-value" style="color:#00c853" id="inviteBonus">$0</div>
+                <div class="invite-stat-label">Bonus</div>
+            </div>
+        </div>
+
+        <!-- PENDING BANNER -->
+        <div class="pending-banner" id="pendingBanner">
+            <div class="pending-banner-icon">
+                <i class="fas fa-hourglass-half"></i>
+            </div>
+            <div class="pending-banner-content">
+                <div class="pending-banner-title">Do'stingiz tasdiqlashi kutilmoqda</div>
+                <div class="pending-banner-desc">
+                    Siz yuborgan havola orqali ro'yxatdan o'tgan taqdirda, sizga bonus pul beriladi
+                </div>
+            </div>
+            <div class="pending-banner-spinner"></div>
+        </div>
+
+        <!-- HAVOLA -->
+        <div class="invite-link-box">
+            <input type="text" id="inviteLink" class="invite-link-input" readonly value="https://t.me/Strategioyinlar_bot?start=ref_aof">
+            <button class="invite-copy-btn" onclick="copyInviteLink()">
+                <i class="fas fa-copy"></i>
+            </button>
+        </div>
+
+        <!-- SHARE TUGMALAR -->
+        <div class="invite-share-row">
+            <button class="btn btn-secondary invite-share-btn" onclick="shareTelegram()">
+                <i class="fab fa-telegram"></i> Telegram
+            </button>
+            <button class="btn btn-secondary invite-share-btn" onclick="shareWhatsapp()">
+                <i class="fab fa-whatsapp"></i> WhatsApp
+            </button>
+            <button class="btn btn-secondary invite-share-btn" onclick="shareMore()">
+                <i class="fas fa-share-alt"></i> Boshqa
+            </button>
+        </div>
+
+        <!-- ASOSIY TUGMA -->
+        <button class="btn btn-telegram" style="width:100%;margin-top:12px" onclick="shareTelegram()">
+            <i class="fab fa-telegram"></i> HAVOLANI YUBORISH
+        </button>
+    </div>
+
+    <!-- ===== BOTTOM NAV ===== -->
     <nav class="bottom-nav">
-        <div class="nav-item active" onclick="showPage('mainContainer')"><i class="fas fa-home"></i><span>ASOSIY</span></div>
-        <div class="nav-item" onclick="openGame()"><i class="fas fa-bolt"></i><span>SIGNAL</span></div>
-        <div class="nav-item" onclick="joinTelegram()"><i class="fab fa-telegram"></i><span>TELEGRAM</span></div>
-        <div class="nav-item" onclick="showPage('settingsPage')"><i class="fas fa-cog"></i><span>SOZLAMALAR</span></div>
+        <div class="nav-item active" onclick="showPage('mainContainer')">
+            <i class="fas fa-home"></i><span>ASOSIY</span>
+        </div>
+        <div class="nav-item" onclick="openGame()">
+            <i class="fas fa-bolt"></i><span>SIGNAL</span>
+        </div>
+        <div class="nav-item" onclick="joinTelegram()">
+            <i class="fab fa-telegram"></i><span>TELEGRAM</span>
+        </div>
+        <div class="nav-item" onclick="showPage('settingsPage')">
+            <i class="fas fa-cog"></i><span>SOZLAMA</span>
+        </div>
     </nav>
 </div>
 
+<!-- ===== SETTINGS PAGE ===== -->
 <div class="page-container" id="settingsPage">
-    <header class="app-header"><div class="logo"><div class="logo-icon" onclick="showPage('mainContainer')" style="cursor:pointer"><i class="fas fa-arrow-left"></i></div><div class="logo-text">SOZLAMALAR</div></div></header>
+    <header class="app-header">
+        <div class="logo">
+            <div class="logo-icon" onclick="showPage('mainContainer')">
+                <i class="fas fa-arrow-left"></i>
+            </div>
+            <div class="logo-text">SOZLAMALAR</div>
+        </div>
+    </header>
     <div class="card">
-        <button class="btn btn-primary" style="width:100%;margin-bottom:10px" onclick="changeId()">🆔 ID O'ZGARTIRISH</button>
-        <button class="btn btn-secondary" style="width:100%" onclick="resetApp()">♻️ RESET</button>
+        <div class="card-title"><i class="fas fa-sliders-h"></i> Boshqaruv</div>
+        <p class="card-subtitle" style="margin-bottom:16px">Ilova sozlamalarini boshqaring</p>
+        <div class="settings-list">
+            <button class="settings-btn" onclick="changeId()">
+                <i class="fas fa-id-card"></i>
+                <span>ID O'ZGARTIRISH</span>
+                <i class="fas fa-chevron-right chevron"></i>
+            </button>
+            <button class="settings-btn" onclick="resetApp()">
+                <i class="fas fa-redo"></i>
+                <span>ILOVANI RESET QILISH</span>
+                <i class="fas fa-chevron-right chevron"></i>
+            </button>
+        </div>
     </div>
 </div>
 
+<!-- ===== GAME MODAL ===== -->
 <div class="modal-overlay" id="gameModal">
     <div class="modal-content">
-        <div style="display:flex;justify-content:space-between;margin-bottom:15px">
-            <h3 style="color:#ff0000">🎯 SIGNAL OLISH</h3>
-            <div onclick="closeModal('gameModal')" style="cursor:pointer;width:32px;height:32px;background:rgba(255,255,255,0.1);border-radius:10px;display:flex;align-items:center;justify-content:center"><i class="fas fa-times"></i></div>
+        <div class="modal-handle"></div>
+        <div class="modal-header">
+            <div class="modal-title"><i class="fas fa-bullseye"></i> SIGNAL OLISH</div>
+            <button class="modal-close" onclick="closeModal('gameModal')">
+                <i class="fas fa-times"></i>
+            </button>
         </div>
+
+        <!-- ===== ID INPUT SECTION ===== -->
         <div id="idInputSection">
-            <input type="text" id="userIdInput" class="id-input" placeholder="ID raqam" maxlength="11">
-            <button class="btn btn-primary" style="width:100%;margin-bottom:10px" onclick="verifyId()">TASDIQLASH</button>
-            <button class="btn btn-register" style="width:100%" onclick="registerUser()">📝 RO'YXATDAN O'TISH</button>
+            <div class="id-notice">
+                <div class="id-notice-header">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <span>MUHIM ESLATMA</span>
+                </div>
+                <ul class="id-notice-list">
+                    <li>
+                        <i class="fas fa-check-circle"></i>
+                        <span>ID raqamingiz <b>akkauntda telefon faollashtirilgan</b> bo'lishi shart</span>
+                    </li>
+                    <li>
+                        <i class="fas fa-check-circle"></i>
+                        <span>Ro'yxatdan o'tib <b>Apple of Fortune</b> o'yiniga kiring</span>
+                    </li>
+                    <li>
+                        <i class="fas fa-check-circle"></i>
+                        <span>O'yinda <b>olmalarni oldindan ko'ring</b> — shunda <b style="color:#00c853">aniq signal</b> olasiz</span>
+                    </li>
+                    <li class="danger">
+                        <i class="fas fa-fire"></i>
+                        <span><b>Signallar soni cheklangan!</b> Shoshiling</span>
+                    </li>
+                </ul>
+            </div>
+
+            <p class="id-label">
+                <i class="fas fa-id-card"></i> ID raqamingizni kiriting
+            </p>
+            <input type="text" id="userIdInput" class="id-input" placeholder="123456789" maxlength="11" inputmode="numeric">
+
+            <button class="btn btn-primary" style="width:100%;margin-bottom:10px" onclick="verifyId()">
+                <i class="fas fa-check"></i> TASDIQLASH
+            </button>
+            <button class="btn btn-register" style="width:100%" onclick="registerUser()">
+                <i class="fas fa-user-plus"></i> RO'YXATDAN O'TISH
+            </button>
         </div>
-        <div id="gameSection" style="display:none">
-            <div class="game-info" id="gameInfo">🍎 "OLMALARNI KO'RISH" tugmasini bosing!</div>
+
+        <!-- ===== GAME SECTION ===== -->
+        <div id="gameSection" class="hidden">
+            <div class="game-progress" id="gameProgress"></div>
+            <div class="game-info" id="gameInfo">
+                🍎 "OLMALARNI KO'RISH" tugmasini bosing!
+            </div>
             <div class="game-apples-container" id="gameApplesContainer"></div>
-            <button class="btn btn-secondary" id="revealBtn" style="width:100%;margin-bottom:10px" onclick="revealApples()">🍎 OLMALARNI KO'RISH</button>
-            <button class="btn btn-primary" id="nextBtn" style="width:100%" disabled onclick="nextStage()">⏩ KEYINGI SIGNAL</button>
+            <button class="btn btn-secondary" id="revealBtn" style="width:100%;margin-bottom:10px" onclick="revealApples()">
+                <i class="fas fa-eye"></i> OLMALARNI KO'RISH
+            </button>
+            <button class="btn btn-primary" id="nextBtn" style="width:100%" disabled onclick="nextStage()">
+                <i class="fas fa-forward"></i> KEYINGI SIGNAL
+            </button>
         </div>
     </div>
 </div>
 
 <script>
+'use strict';
+
+// ===== CONSTANTS =====
+const SHARE_TEXT = "🍎 Apple of Fortune Premium — 98% aniqlikdagi signallar! Qo'shiling:";
+const SHARE_TITLE = "Apple of Fortune Premium";
+const BOT_URL = "https://t.me/Strategioyinlar_bot";
+
 // ===== TRANSLATIONS =====
 const translations = {
     uz: { telegramInstallText: "📱 QO'SHISH", pwaInstallText: "📱 O'RNATISH", installedText: "✅ Ilova o'rnatildi!" },
@@ -476,203 +1561,542 @@ const translations = {
     en: { telegramInstallText: "📱 ADD", pwaInstallText: "📱 INSTALL", installedText: "✅ App installed!" }
 };
 
-let currentLang = localStorage.getItem('aofLang') || 'uz';
-let gameState = { idVerified: false, userId: null };
-let currentStage = 1, totalStages = 0, currentApples = [], gameActive = false, stageCompleted = false;
-let dailyStats = { activeUsers: 2580, avgIncome: 445 };
+// ===== STATE =====
+const state = {
+    lang: localStorage.getItem('aofLang') || 'uz',
+    idVerified: false,
+    userId: null,
+    currentStage: 1,
+    totalStages: 0,
+    currentApples: [],
+    gameActive: false,
+    stageCompleted: false,
+    dailyStats: { activeUsers: 2580, avgIncome: 445 }
+};
 
-function showToast(msg, type) {
-    let t = document.createElement('div');
+// ===== DOM CACHE =====
+const $ = (id) => document.getElementById(id);
+const $$ = (sel) => document.querySelectorAll(sel);
+
+// ===== HELPERS =====
+const shuffle = (arr) => {
+    for (let i = arr.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+    return arr;
+};
+
+const getRandomStages = () => [1, 2, 3, 4, 5][Math.floor(Math.random() * 5)];
+const isMobile = () => /Android|iPhone|iPad|iPod|Opera Mini|IEMobile|WPDesktop/i.test(navigator.userAgent);
+
+// ===== TOAST =====
+let toastTimer = null;
+function showToast(msg, type = 'info') {
+    const existing = document.querySelector('.toast');
+    if (existing) existing.remove();
+    if (toastTimer) clearTimeout(toastTimer);
+
+    const t = document.createElement('div');
     t.className = `toast ${type}`;
-    t.innerHTML = msg;
+    t.textContent = msg;
     document.body.appendChild(t);
-    setTimeout(() => t.remove(), 3000);
+
+    toastTimer = setTimeout(() => {
+        t.style.animation = 'fadeIn 0.3s reverse';
+        setTimeout(() => t.remove(), 300);
+    }, 2800);
 }
 
-function showWinPopup() {
-    let popup = document.getElementById('winPopup');
-    popup.style.display = 'block';
-    setTimeout(() => { popup.style.display = 'none'; }, 2000);
+// ===== POPUPS =====
+function showResultPopup(type) {
+    const popup = type === 'win' ? $('winPopup') : $('losePopup');
+    popup.classList.add('active');
+    setTimeout(() => popup.classList.remove('active'), 2000);
 }
 
-function showLosePopup() {
-    let popup = document.getElementById('losePopup');
-    popup.style.display = 'block';
-    setTimeout(() => { popup.style.display = 'none'; }, 2000);
-}
-
+// ===== LOADING =====
 function showLoading(callback) {
-    let overlay = document.getElementById('loadingOverlay');
-    let texts = ['HACKING', 'ANALYSIS', 'SIGNAL', 'KUTILMOQDA', 'DECODING'];
-    let i = 0;
+    const overlay = $('loadingOverlay');
+    const textEl = $('overlayText');
+    const subEl = $('overlaySub');
+    const progressEl = $('overlayProgress');
+
+    const texts = ['HACKING', 'ANALYSIS', 'SIGNAL', 'KUTILMOQDA', 'DECODING'];
+    const subs = ['Tizimga kirish...', 'Ma\'lumot yig\'ilmoqda...', 'Signal qidirilmoqda...', 'Kutilmoqda...', 'Dekod qilinmoqda...'];
+
     overlay.classList.add('active');
-    let interval = setInterval(() => {
+    let i = 0;
+
+    const interval = setInterval(() => {
         if (i < texts.length) {
-            document.getElementById('overlayText').innerText = texts[i];
+            textEl.textContent = texts[i];
+            subEl.textContent = subs[i];
+            progressEl.style.width = `${((i + 1) / texts.length) * 100}%`;
             i++;
         } else {
             clearInterval(interval);
-            setTimeout(() => { overlay.classList.remove('active'); if(callback) callback(); }, 500);
+            setTimeout(() => {
+                overlay.classList.remove('active');
+                progressEl.style.width = '0%';
+                if (callback) callback();
+            }, 400);
         }
-    }, 600);
+    }, 550);
 }
 
-function getRandomStages() { return [1,2,3,4,5][Math.floor(Math.random()*5)]; }
-
+// ===== LANGUAGE =====
 function selectLang(lang) {
-    currentLang = lang;
+    state.lang = lang;
     localStorage.setItem('aofLang', lang);
-    document.getElementById('languageSelector').style.display = 'none';
+
+    const langSelector = $('languageSelector');
+    langSelector.classList.add('hide');
+
+    setTimeout(() => {
+        if (langSelector && langSelector.parentNode) {
+            langSelector.parentNode.removeChild(langSelector);
+        }
+    }, 100);
+
     showToast('✅ Til saqlandi', 'success');
-    setTimeout(() => checkAndShowInstall(), 500);
+    setTimeout(checkAndShowInstall, 500);
 }
 
+// ===== NAVIGATION =====
 function showPage(page) {
-    document.getElementById('mainContainer').style.display = 'none';
-    document.getElementById('settingsPage').style.display = 'none';
-    document.getElementById(page).style.display = 'block';
+    $('mainContainer').classList.remove('active');
+    $('settingsPage').classList.remove('active');
+    $(page).classList.add('active');
+
+    $$('.nav-item').forEach(item => item.classList.remove('active'));
+    const navMap = { mainContainer: 0, settingsPage: 3 };
+    if (navMap[page] !== undefined) {
+        const items = $$('.nav-item');
+        if (items[navMap[page]]) items[navMap[page]].classList.add('active');
+    }
+    window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-function registerUser() { 
-    window.open('https://refpa96317.com/L?tag=d_4585917m_11213c_&site=4585917&ad=11213&r=casino', '_blank'); 
+// ===== ACTIONS =====
+function registerUser() {
+    window.open('https://refpa96317.com/L?tag=d_4585917m_11213c_&site=4585917&ad=11213&r=casino', '_blank');
     showToast('✅ Ro\'yxatdan o\'tish sahifasi ochildi', 'success');
 }
-function joinTelegram() { window.open('https://t.me/Strategioyinlar_bot', '_blank'); showToast('✅ Telegram ochildi', 'success'); }
-function changeId() { localStorage.removeItem('aofUserId'); gameState.idVerified = false; gameState.userId = null; showToast('✅ ID o‘chirildi', 'success'); }
-function resetApp() { localStorage.clear(); location.reload(); }
-function closeModal(id) { document.getElementById(id).style.display = 'none'; }
+function joinTelegram() {
+    window.open(BOT_URL, '_blank');
+    showToast('✅ Telegram ochildi', 'success');
+}
+function changeId() {
+    localStorage.removeItem('aofUserId');
+    state.idVerified = false;
+    state.userId = null;
+    showToast('✅ ID o\'chirildi', 'success');
+}
+function resetApp() {
+    localStorage.clear();
+    location.reload();
+}
+function closeModal(id) {
+    $(id).classList.remove('active');
+}
 
+// ===== GAME MODAL =====
 function openGame() {
-    document.getElementById('gameModal').style.display = 'flex';
-    if (gameState.idVerified) {
-        document.getElementById('idInputSection').style.display = 'none';
-        document.getElementById('gameSection').style.display = 'block';
+    const modal = $('gameModal');
+    modal.classList.add('active');
+
+    if (state.idVerified) {
+        $('idInputSection').classList.add('hidden');
+        $('gameSection').classList.remove('hidden');
         startNewGame();
     } else {
-        document.getElementById('idInputSection').style.display = 'block';
-        document.getElementById('gameSection').style.display = 'none';
+        $('idInputSection').classList.remove('hidden');
+        $('gameSection').classList.add('hidden');
     }
 }
 
+// ===== VERIFY ID =====
 function verifyId() {
-    let val = document.getElementById('userIdInput').value.trim();
-    if (!val || val.length < 9) { showToast('❌ ID noto‘g‘ri', 'error'); return; }
-    gameState.idVerified = true;
-    gameState.userId = val;
+    const val = $('userIdInput').value.trim();
+    if (!val || val.length < 9) {
+        showToast('❌ ID noto\'g\'ri (9+ raqam)', 'error');
+        return;
+    }
+    state.idVerified = true;
+    state.userId = val;
     localStorage.setItem('aofUserId', val);
-    document.getElementById('idInputSection').style.display = 'none';
-    document.getElementById('gameSection').style.display = 'block';
+    $('idInputSection').classList.add('hidden');
+    $('gameSection').classList.remove('hidden');
     startNewGame();
     showToast('✅ ID tasdiqlandi', 'success');
 }
 
+// ===== GAME LOGIC =====
 function startNewGame() {
-    totalStages = getRandomStages();
-    currentStage = 1;
-    document.getElementById('levelDisplay').innerHTML = `${currentStage}/${totalStages}`;
-    document.getElementById('gameInfo').innerHTML = `🍎 "OLMALARNI KO'RISH" tugmasini bosing!`;
+    state.totalStages = getRandomStages();
+    state.currentStage = 1;
+    updateGameUI();
     createApples();
 }
 
-function createApples() {
-    let types = ['whole', 'bitten', 'bitten', 'bitten', 'bitten'];
-    for (let i = types.length - 1; i > 0; i--) {
-        let j = Math.floor(Math.random() * (i + 1));
-        [types[i], types[j]] = [types[j], types[i]];
+function updateGameUI() {
+    $('levelDisplay').textContent = `${state.currentStage}/${state.totalStages}`;
+    $('gameInfo').innerHTML = '🍎 "OLMALARNI KO\'RISH" tugmasini bosing!';
+
+    const progress = $('gameProgress');
+    progress.innerHTML = '';
+    for (let i = 1; i <= state.totalStages; i++) {
+        const dot = document.createElement('div');
+        dot.className = 'progress-dot';
+        if (i < state.currentStage) dot.classList.add('done');
+        else if (i === state.currentStage) dot.classList.add('active');
+        progress.appendChild(dot);
     }
-    currentApples = types;
-    gameActive = true;
-    stageCompleted = false;
-    document.getElementById('revealBtn').disabled = false;
-    document.getElementById('revealBtn').innerHTML = '🍎 OLMALARNI KO\'RISH';
-    document.getElementById('nextBtn').disabled = true;
-    
-    let container = document.getElementById('gameApplesContainer');
+}
+
+function createApples() {
+    const types = shuffle(['whole', 'bitten', 'bitten', 'bitten', 'bitten']);
+    state.currentApples = types;
+    state.gameActive = true;
+    state.stageCompleted = false;
+
+    const revealBtn = $('revealBtn');
+    revealBtn.disabled = false;
+    revealBtn.innerHTML = '<i class="fas fa-eye"></i> OLMALARNI KO\'RISH';
+    $('nextBtn').disabled = true;
+
+    const container = $('gameApplesContainer');
     container.innerHTML = '';
     for (let i = 0; i < 5; i++) {
-        let apple = document.createElement('div');
+        const apple = document.createElement('div');
         apple.className = 'game-apple apple-mystery';
         container.appendChild(apple);
     }
 }
 
 function revealApples() {
-    if (!gameActive || stageCompleted) return;
-    gameActive = false;
-    
-    let apples = document.querySelectorAll('.game-apple');
-    let wholeIndex = -1;
-    for (let i = 0; i < currentApples.length; i++) {
-        if (currentApples[i] === 'whole') { wholeIndex = i; break; }
-    }
-    
-    for (let i = 0; i < apples.length; i++) {
-        apples[i].classList.remove('apple-mystery');
-        if (currentApples[i] === 'whole') {
-            apples[i].classList.add('apple-whole');
-        } else {
-            apples[i].classList.add('apple-bitten');
-        }
-    }
-    
-    if (wholeIndex !== -1) {
-        // YUTUQ - faqat "GALABA" yozuvi chiqadi, pul miqdori ko'rsatilmaydi
-        showWinPopup();
-        dailyStats.activeUsers += Math.floor(Math.random() * 3) + 1;
-        document.getElementById('onlineCount').innerHTML = dailyStats.activeUsers;
-        
-        if (currentStage >= totalStages) {
-            stageCompleted = true;
-            document.getElementById('revealBtn').disabled = true;
-            document.getElementById('nextBtn').disabled = true;
-            setTimeout(() => {
-                if (confirm('Tabriklaymiz! O\'yinni tugatdingiz!\nYana o\'ynaysizmi?')) {
-                    startNewGame();
-                } else {
-                    closeModal('gameModal');
-                }
-            }, 2500);
-        } else {
-            document.getElementById('nextBtn').disabled = false;
-            document.getElementById('revealBtn').disabled = true;
-            stageCompleted = true;
-        }
-    } else {
-        // YUTQIZIQ
-        showLosePopup();
-        document.getElementById('revealBtn').disabled = true;
-        document.getElementById('nextBtn').disabled = true;
+    if (!state.gameActive || state.stageCompleted) return;
+    state.gameActive = false;
+
+    const apples = $$('.game-apple');
+    let wholeIndex = state.currentApples.indexOf('whole');
+
+    apples.forEach((apple, i) => {
         setTimeout(() => {
-            if (confirm('O\'yin tugadi! Qayta o\'ynaysizmi?')) {
+            apple.classList.remove('apple-mystery');
+            apple.classList.add(state.currentApples[i] === 'whole' ? 'apple-whole' : 'apple-bitten');
+            apple.classList.add('apple-reveal');
+        }, i * 120);
+    });
+
+    setTimeout(() => {
+        if (wholeIndex !== -1) {
+            handleWin();
+        } else {
+            handleLose();
+        }
+    }, 700);
+}
+
+function handleWin() {
+    showResultPopup('win');
+
+    state.dailyStats.activeUsers += Math.floor(Math.random() * 3) + 1;
+    $('onlineCount').textContent = state.dailyStats.activeUsers;
+
+    if (state.currentStage >= state.totalStages) {
+        state.stageCompleted = true;
+        $('revealBtn').disabled = true;
+        $('nextBtn').disabled = true;
+
+        setTimeout(() => {
+            if (confirm('Tabriklaymiz! O\'yinni tugatdingiz!\nYana o\'ynaysizmi?')) {
                 startNewGame();
             } else {
                 closeModal('gameModal');
             }
-        }, 2000);
+        }, 2500);
+    } else {
+        state.stageCompleted = true;
+        $('nextBtn').disabled = false;
+        $('revealBtn').disabled = true;
     }
 }
 
+function handleLose() {
+    showResultPopup('lose');
+    $('revealBtn').disabled = true;
+    $('nextBtn').disabled = true;
+
+    setTimeout(() => {
+        if (confirm('O\'yin tugadi! Qayta o\'ynaysizmi?')) {
+            startNewGame();
+        } else {
+            closeModal('gameModal');
+        }
+    }, 2000);
+}
+
 function nextStage() {
-    if (!stageCompleted) return;
+    if (!state.stageCompleted) return;
     showLoading(() => {
-        currentStage++;
-        document.getElementById('levelDisplay').innerHTML = `${currentStage}/${totalStages}`;
-        document.getElementById('gameInfo').innerHTML = `🍎 "OLMALARNI KO'RISH" tugmasini bosing!`;
+        state.currentStage++;
+        updateGameUI();
         createApples();
     });
 }
 
-// ===== PWA INSTALL =====
+// ===== OFFERS =====
+const OFFERS = [
+    { icon: 'fa-fire',       title: 'Bonus 100%',     text: 'Birinchi depozitga' },
+    { icon: 'fa-gift',       title: 'Free Spin',       text: '50 ta bepul spin' },
+    { icon: 'fa-bolt',       title: 'Tezkor Yechish',  text: '5 daqiqada pul' },
+    { icon: 'fa-crown',      title: 'VIP Status',      text: 'Maxsus imtiyozlar' },
+    { icon: 'fa-coins',      title: 'Cashback 10%',    text: 'Har hafta qaytim' },
+    { icon: 'fa-trophy',     title: 'Turnir',          text: '$10,000 sovrin' },
+    { icon: 'fa-mobile-alt', title: 'Mobil Bonus',     text: 'Telefon uchun +50%' },
+    { icon: 'fa-user-plus',  title: 'Do\'st Taklif',   text: 'Har biri uchun $5' },
+    { icon: 'fa-clock',      title: '24/7 Qo\'llab',   text: 'Doimiy yordam' },
+    { icon: 'fa-shield-alt', title: 'Xavfsiz To\'lov', text: '100% himoyalangan' }
+];
+
+function renderOffers() {
+    const grid = $('offersGrid');
+    if (!grid) return;
+    grid.innerHTML = '';
+    OFFERS.forEach((offer, i) => {
+        const el = document.createElement('div');
+        el.className = 'offer-item';
+        el.style.animation = `fadeInUp 0.4s ${i * 0.05}s both`;
+        el.innerHTML = `
+            <div class="offer-icon"><i class="fas ${offer.icon}"></i></div>
+            <div class="offer-text">
+                <b>${offer.title}</b>
+                ${offer.text}
+            </div>
+        `;
+        el.onclick = () => registerUser();
+        grid.appendChild(el);
+    });
+}
+
+// ===== VIP SIGNAL =====
+function getVipSignal() {
+    showLoading(() => {
+        showToast('👑 VIP signal faollashtirildi!', 'success');
+        setTimeout(() => {
+            window.open('https://refpa96317.com/L?tag=d_4585917m_11213c_&site=4585917&ad=11213&r=casino', '_blank');
+        }, 400);
+    });
+}
+
+// ============================================================
+// INVITE SYSTEM
+// ============================================================
+function getInviteData() {
+    try {
+        return JSON.parse(localStorage.getItem('aofInvite') || '{"count":0,"bonus":0,"pending":0}');
+    } catch {
+        return { count: 0, bonus: 0, pending: 0 };
+    }
+}
+
+function saveInviteData(data) {
+    localStorage.setItem('aofInvite', JSON.stringify(data));
+}
+
+function updateInviteUI() {
+    const data = getInviteData();
+    const countEl = $('inviteCount');
+    const bonusEl = $('inviteBonus');
+    const pendingBanner = $('pendingBanner');
+
+    if (countEl) countEl.textContent = data.count;
+    if (bonusEl) bonusEl.textContent = '$' + data.bonus;
+
+    if (pendingBanner) {
+        if (data.pending > 0) {
+            pendingBanner.classList.add('show');
+        } else {
+            pendingBanner.classList.remove('show');
+        }
+    }
+}
+
+function getInviteUrl() {
+    const userId = state.userId || 'guest';
+    return `${BOT_URL}?start=ref_${userId}`;
+}
+
+function updateInviteLinkInput() {
+    const input = $('inviteLink');
+    if (input) input.value = getInviteUrl();
+}
+
+// ============================================================
+// COPY INVITE LINK
+// ============================================================
+function copyInviteLink() {
+    const url = getInviteUrl();
+
+    const fallbackCopy = (text) => {
+        const ta = document.createElement('textarea');
+        ta.value = text;
+        ta.style.position = 'fixed';
+        ta.style.opacity = '0';
+        document.body.appendChild(ta);
+        ta.select();
+        try {
+            document.execCommand('copy');
+            showToast('✅ Havola nusxalandi!', 'success');
+            bumpInviteDemo();
+        } catch {
+            showToast('❌ Nusxalash imkonsiz', 'error');
+        }
+        document.body.removeChild(ta);
+    };
+
+    if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(url).then(() => {
+            showToast('✅ Havola nusxalandi!', 'success');
+            bumpInviteDemo();
+        }).catch(() => fallbackCopy(url));
+    } else {
+        fallbackCopy(url);
+    }
+}
+
+function bumpInviteDemo() {
+    const data = getInviteData();
+    if (data.count < 50) {
+        data.count += 1;
+        data.bonus += 5;
+        saveInviteData(data);
+        updateInviteUI();
+    }
+}
+
+// ============================================================
+// ✅ HAQIQIY TELEGRAM SHARE
+// ============================================================
+function shareTelegram() {
+    const url = getInviteUrl();
+    const shareUrl = `https://t.me/share/url?url=${encodeURIComponent(url)}&text=${encodeURIComponent(SHARE_TEXT)}`;
+
+    // 1-usul: Telegram WebApp ichida (native)
+    if (tg && tg.openTelegramLink) {
+        try {
+            tg.openTelegramLink(shareUrl);
+            showToast('📤 Telegramda do\'st tanlang...', 'info');
+            showPendingBanner();
+            return;
+        } catch (e) {
+            console.warn('Telegram link error:', e);
+        }
+    }
+
+    // 2-usul: brauzerda (mobil/desktop)
+    if (isMobile()) {
+        // Mobil: Telegram ilovasini ochishga harakat
+        try {
+            window.location.href = shareUrl;
+        } catch (e) {
+            window.open(shareUrl, '_blank', 'noopener,noreferrer');
+        }
+    } else {
+        // Desktop: yangi tabda ochish
+        window.open(shareUrl, '_blank', 'noopener,noreferrer');
+    }
+
+    showToast('📤 Telegramda do\'st tanlang...', 'info');
+    showPendingBanner();
+}
+
+// ============================================================
+// WHATSAPP SHARE
+// ============================================================
+function shareWhatsapp() {
+    const url = getInviteUrl();
+    const fullText = `${SHARE_TEXT}\n${url}`;
+    const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(fullText)}`;
+
+    window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
+    showToast('📤 WhatsApp ochilmoqda...', 'info');
+    showPendingBanner();
+}
+
+// ============================================================
+// NATIVE SHARE (Telefonning share oynasi)
+// ============================================================
+async function shareMore() {
+    const url = getInviteUrl();
+    const shareData = {
+        title: SHARE_TITLE,
+        text: SHARE_TEXT,
+        url: url
+    };
+
+    if (navigator.share) {
+        try {
+            await navigator.share(shareData);
+            showToast('✅ Yuborildi!', 'success');
+            showPendingBanner();
+        } catch (e) {
+            if (e.name === 'AbortError') {
+                console.log('Share cancelled');
+            } else {
+                copyInviteLink();
+            }
+        }
+    } else {
+        // Native share yo'q — copy qilish
+        copyInviteLink();
+    }
+}
+
+// ============================================================
+// PENDING BANNER
+// ============================================================
+function showPendingBanner() {
+    const data = getInviteData();
+    data.pending = (data.pending || 0) + 1;
+    saveInviteData(data);
+    updateInviteUI();
+
+    // 30 soniyadan keyin pendingni kamaytirish
+    setTimeout(() => {
+        const d = getInviteData();
+        if (d.pending > 0) {
+            d.pending -= 1;
+            saveInviteData(d);
+            updateInviteUI();
+        }
+    }, 30000);
+}
+
+// ============================================================
+// PWA INSTALL
+// ============================================================
 let deferredPrompt = null;
 let tg = null;
-if (window.Telegram?.WebApp) { tg = window.Telegram.WebApp; tg.ready(); tg.expand(); }
+
+if (window.Telegram?.WebApp) {
+    tg = window.Telegram.WebApp;
+    tg.ready();
+    tg.expand();
+}
 
 function showInstallBtn(type, text) {
-    let container = document.getElementById('installBtnContainer');
-    container.innerHTML = '';
-    let btn = document.createElement('button');
+    const container = $('installBtnContainer');
+    if (container.innerHTML) return;
+
+    const btn = document.createElement('button');
     btn.className = `install-btn ${type === 'telegram' ? 'install-btn-telegram' : 'install-btn-pwa'}`;
-    btn.innerHTML = type === 'telegram' ? `<i class="fab fa-telegram"></i> ${text}` : `<i class="fas fa-download"></i> ${text}`;
+    btn.innerHTML = type === 'telegram'
+        ? `<i class="fab fa-telegram"></i> ${text}`
+        : `<i class="fas fa-download"></i> ${text}`;
+
     btn.onclick = async (e) => {
         e.stopPropagation();
         if (type === 'telegram' && tg?.addToHomeScreen) {
@@ -680,21 +2104,29 @@ function showInstallBtn(type, text) {
             showToast('📱 Ekranga qo\'shishni tasdiqlang!', 'info');
         } else if (deferredPrompt) {
             deferredPrompt.prompt();
-            let res = await deferredPrompt.userChoice;
-            if (res.outcome === 'accepted') showToast(translations[currentLang]?.installedText || '✅ O\'rnatildi!', 'success');
+            const res = await deferredPrompt.userChoice;
+            if (res.outcome === 'accepted') {
+                showToast(translations[state.lang]?.installedText || '✅ O\'rnatildi!', 'success');
+            }
             deferredPrompt = null;
             container.style.display = 'none';
         }
     };
+
     container.appendChild(btn);
     container.style.display = 'block';
 }
 
 function checkAndShowInstall() {
     if (window.matchMedia('(display-mode: standalone)').matches) return;
-    let container = document.getElementById('installBtnContainer');
-    if (tg && !container.innerHTML) showInstallBtn('telegram', translations[currentLang]?.telegramInstallText || '📱 QO\'SHISH');
-    else if (deferredPrompt && !container.innerHTML) showInstallBtn('pwa', translations[currentLang]?.pwaInstallText || '📱 O\'RNATISH');
+    const container = $('installBtnContainer');
+    if (!container || container.innerHTML) return;
+
+    if (tg) {
+        showInstallBtn('telegram', translations[state.lang]?.telegramInstallText || '📱 QO\'SHISH');
+    } else if (deferredPrompt) {
+        showInstallBtn('pwa', translations[state.lang]?.pwaInstallText || '📱 O\'RNATISH');
+    }
 }
 
 window.addEventListener('beforeinstallprompt', (e) => {
@@ -702,13 +2134,52 @@ window.addEventListener('beforeinstallprompt', (e) => {
     deferredPrompt = e;
     setTimeout(checkAndShowInstall, 1000);
 });
+
 window.addEventListener('appinstalled', () => {
-    document.getElementById('installBtnContainer').style.display = 'none';
+    const container = $('installBtnContainer');
+    if (container) container.style.display = 'none';
     showToast('✅ Ilova o\'rnatildi!', 'success');
 });
 
-if (localStorage.getItem('aofLang')) document.getElementById('languageSelector').style.display = 'none';
-setTimeout(checkAndShowInstall, 2000);
+// ============================================================
+// INIT
+// ============================================================
+(function init() {
+    const savedLang = localStorage.getItem('aofLang');
+    const langSelector = $('languageSelector');
+
+    if (savedLang) {
+        if (langSelector && langSelector.parentNode) {
+            langSelector.parentNode.removeChild(langSelector);
+        }
+        $('mainContainer').classList.add('active');
+    } else {
+        if (langSelector) langSelector.classList.remove('hide');
+        $('mainContainer').classList.remove('active');
+    }
+
+    const savedId = localStorage.getItem('aofUserId');
+    if (savedId) {
+        state.idVerified = true;
+        state.userId = savedId;
+    }
+
+    renderOffers();
+    updateInviteUI();
+    updateInviteLinkInput();
+
+    // Online counter
+    setInterval(() => {
+        if (Math.random() > 0.7) {
+            state.dailyStats.activeUsers += Math.floor(Math.random() * 3) - 1;
+            if (state.dailyStats.activeUsers < 2500) state.dailyStats.activeUsers = 2580;
+            const el = $('onlineCount');
+            if (el) el.textContent = state.dailyStats.activeUsers;
+        }
+    }, 5000);
+
+    setTimeout(checkAndShowInstall, 2000);
+})();
 </script>
 </body>
-</html>
+            </html>
